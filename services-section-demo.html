@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Services Section - Implementation Guide</title>
+    <link rel="stylesheet" href="modern-cargo-style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;700;800&family=Inter:wght@400;600&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <!-- EXPLORE OUR SERVICES SECTION -->
+    <section class="services-section">
+        <div class="services-header">
+            <div class="services-label">WHAT WE OFFER</div>
+            <h2 class="services-title">Explore Our Services</h2>
+            <p class="services-description">
+                If you would like tailor made forwarding solutions for personal or business then we can help.
+                We provide road, sea and air freight for big or small projects and take care of your packaging
+                needs and much more
+            </p>
+        </div>
+
+        <div class="services-grid">
+            <!-- Land Freight Card -->
+            <div class="service-card">
+                <div class="service-image-wrapper">
+                    <img src="https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?w=800&h=600&fit=crop"
+                        alt="Land Freight - Truck on Highway" class="service-image">
+                    <div class="service-icon-overlay">
+                        <i class="fas fa-truck"></i>
+                    </div>
+                </div>
+                <div class="service-content">
+                    <h3 class="service-title">Land Freight</h3>
+                    <p class="service-description-text">
+                        Reliable ground transportation solutions for your cargo across all terrains and distances.
+                    </p>
+                    <a href="#" class="service-read-more">Read More...</a>
+                </div>
+            </div>
+
+            <!-- Air Transport Card -->
+            <div class="service-card">
+                <div class="service-image-wrapper">
+                    <img src="https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=800&h=600&fit=crop"
+                        alt="Air Transport - Airplane at Gate" class="service-image">
+                    <div class="service-icon-overlay">
+                        <i class="fas fa-plane"></i>
+                    </div>
+                </div>
+                <div class="service-content">
+                    <h3 class="service-title">Air Transport</h3>
+                    <p class="service-description-text">
+                        Fast and efficient air freight services for time-sensitive deliveries worldwide.
+                    </p>
+                    <a href="#" class="service-read-more">Read More...</a>
+                </div>
+            </div>
+
+            <!-- Sea Transport Card -->
+            <div class="service-card">
+                <div class="service-image-wrapper">
+                    <img src="https://images.unsplash.com/photo-1578575437130-527eed3abbec?w=800&h=600&fit=crop"
+                        alt="Sea Transport - Container Ship" class="service-image">
+                    <div class="service-icon-overlay">
+                        <i class="fas fa-ship"></i>
+                    </div>
+                </div>
+                <div class="service-content">
+                    <h3 class="service-title">Sea Transport</h3>
+                    <p class="service-description-text">
+                        Cost-effective ocean freight solutions for large-scale international shipping needs.
+                    </p>
+                    <a href="#" class="service-read-more">Read More...</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ELEMENTOR IMPLEMENTATION GUIDE -->
+    <div
+        style="max-width: 1200px; margin: 80px auto; padding: 40px; background: #f8f9fa; border-radius: 20px; font-family: 'Inter', sans-serif;">
+        <h2 style="color: #0B162C; font-family: 'Manrope', sans-serif; font-size: 32px; margin-bottom: 30px;">
+            📋 Elementor Implementation Guide
+        </h2>
+
+        <div style="background: white; padding: 30px; border-radius: 15px; margin-bottom: 30px;">
+            <h3 style="color: #F37021; margin-bottom: 20px;">Step 1: Create the Section</h3>
+            <ol style="line-height: 2; color: #5A6C7D;">
+                <li>Add a new <strong>Section</strong> in Elementor</li>
+                <li>Go to <strong>Section Settings → Style → Background</strong></li>
+                <li>Set Background Type to <strong>Gradient</strong></li>
+                <li>Color 1: <code>#F5F7FA</code>, Color 2: <code>#E8EDF2</code></li>
+                <li>In <strong>Advanced → CSS Classes</strong>, add: <code>services-section</code></li>
+                <li>Set Padding: Top/Bottom <code>80px</code></li>
+            </ol>
+        </div>
+
+        <div style="background: white; padding: 30px; border-radius: 15px; margin-bottom: 30px;">
+            <h3 style="color: #F37021; margin-bottom: 20px;">Step 2: Add Header Content</h3>
+            <ol style="line-height: 2; color: #5A6C7D;">
+                <li>Add a <strong>Heading Widget</strong></li>
+                <li>Text: <code>WHAT WE OFFER</code></li>
+                <li>In <strong>Advanced → CSS Classes</strong>: <code>services-label</code></li>
+                <li>Add another <strong>Heading Widget</strong></li>
+                <li>Text: <code>Explore Our Services</code></li>
+                <li>In <strong>Advanced → CSS Classes</strong>: <code>services-title</code></li>
+                <li>Add a <strong>Text Editor Widget</strong></li>
+                <li>Paste the description text</li>
+                <li>In <strong>Advanced → CSS Classes</strong>: <code>services-description</code></li>
+                <li>Wrap all three in a container with CSS class: <code>services-header</code></li>
+            </ol>
+        </div>
+
+        <div style="background: white; padding: 30px; border-radius: 15px; margin-bottom: 30px;">
+            <h3 style="color: #F37021; margin-bottom: 20px;">Step 3: Create Service Cards</h3>
+            <ol style="line-height: 2; color: #5A6C7D;">
+                <li>Add an <strong>Inner Section</strong> with 3 columns (33% each)</li>
+                <li>Add CSS class to Inner Section: <code>services-grid</code></li>
+                <li><strong>For each column:</strong>
+                    <ul style="margin-top: 10px;">
+                        <li>Add a <strong>Container</strong> with CSS class: <code>service-card</code></li>
+                        <li>Inside, add an <strong>Image Widget</strong></li>
+                        <li>Wrap image in a div with CSS class: <code>service-image-wrapper</code></li>
+                        <li>Add an <strong>Icon Widget</strong> with CSS class: <code>service-icon-overlay</code></li>
+                        <li>Choose icon: Truck (Land), Plane (Air), Ship (Sea)</li>
+                        <li>Add another container with CSS class: <code>service-content</code></li>
+                        <li>Inside content: Add <strong>Heading</strong> (CSS: <code>service-title</code>)</li>
+                        <li>Add <strong>Text Editor</strong> (CSS: <code>service-description-text</code>)</li>
+                        <li>Add <strong>Button Widget</strong> styled as link (CSS: <code>service-read-more</code>)</li>
+                    </ul>
+                </li>
+            </ol>
+        </div>
+
+        <div style="background: white; padding: 30px; border-radius: 15px; margin-bottom: 30px;">
+            <h3 style="color: #F37021; margin-bottom: 20px;">Step 4: Apply Custom CSS</h3>
+            <ol style="line-height: 2; color: #5A6C7D;">
+                <li>Go to <strong>Appearance → Customize → Additional CSS</strong></li>
+                <li>Or <strong>Elementor → Custom CSS</strong> (if available)</li>
+                <li>Copy all CSS from <code>modern-cargo-style.css</code></li>
+                <li>Paste it into the Custom CSS field</li>
+                <li>Click <strong>Publish</strong></li>
+            </ol>
+        </div>
+
+        <div style="background: #FFF3E0; padding: 25px; border-radius: 15px; border-left: 5px solid #F37021;">
+            <h3 style="color: #F37021; margin-bottom: 15px;">💡 Pro Tips</h3>
+            <ul style="line-height: 2; color: #5A6C7D;">
+                <li><strong>Images:</strong> Use high-quality images (800x600px minimum)</li>
+                <li><strong>Icons:</strong> Use Font Awesome icons for consistency</li>
+                <li><strong>Animations:</strong> All animations are built into the CSS!</li>
+                <li><strong>Hover Effects:</strong> Test by hovering over cards in preview mode</li>
+                <li><strong>Mobile:</strong> Responsive styles are already included</li>
+            </ul>
+        </div>
+
+        <div
+            style="background: #E3F2FD; padding: 25px; border-radius: 15px; border-left: 5px solid #2196F3; margin-top: 20px;">
+            <h3 style="color: #2196F3; margin-bottom: 15px;">🎨 Key Features</h3>
+            <ul style="line-height: 2; color: #5A6C7D;">
+                <li>✨ <strong>Smooth Animations:</strong> Cards fade in on page load</li>
+                <li>🎯 <strong>Hover Effects:</strong> Cards lift up with shadow on hover</li>
+                <li>🔄 <strong>Icon Rotation:</strong> Icons rotate 360° and change color</li>
+                <li>📸 <strong>Image Zoom:</strong> Images scale and rotate slightly on hover</li>
+                <li>🌈 <strong>Gradient Accents:</strong> Top border appears on hover</li>
+                <li>📱 <strong>Fully Responsive:</strong> Adapts beautifully to all screen sizes</li>
+            </ul>
+        </div>
+    </div>
+</body>
+
+</html>

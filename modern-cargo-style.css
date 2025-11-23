@@ -1,0 +1,592 @@
+/* 
+ * Modern Direct Cargo Design System
+ * Matches the provided reference image
+ */
+
+:root {
+    --color-primary: #F37021;
+    /* Orange from button */
+    --color-secondary: #0B162C;
+    /* Dark Navy Blue from Hero */
+    --color-accent: #F37021;
+    --color-text-dark: #1A1A1A;
+    --color-text-light: #FFFFFF;
+    --color-bg-light: #FFF9F2;
+    /* Light Beige from About section */
+    --radius-lg: 30px;
+    --radius-sm: 8px;
+    --font-heading: 'Manrope', 'Nunito', sans-serif;
+    --font-body: 'Inter', 'Open Sans', sans-serif;
+}
+
+body {
+    font-family: var(--font-body);
+    color: var(--color-text-dark);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: var(--font-heading);
+    font-weight: 800;
+}
+
+/* --- Buttons --- */
+.btn-primary .elementor-button {
+    background-color: var(--color-primary) !important;
+    border-radius: 8px !important;
+    /* Slightly rounded, not pill */
+    font-weight: 700 !important;
+    padding: 12px 30px !important;
+    text-transform: capitalize !important;
+}
+
+.btn-primary .elementor-button:hover {
+    background-color: #D95D15 !important;
+    transform: translateY(-2px);
+}
+
+/* --- Hero Section --- */
+.hero-section {
+    background-color: var(--color-secondary);
+    background-image: radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+    background-size: 30px 30px;
+    /* Grid effect */
+    color: white;
+}
+
+.hero-subtitle {
+    color: var(--color-primary);
+    font-weight: 700;
+    letter-spacing: 1px;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.hero-subtitle::after {
+    content: '////////////';
+    /* Dashed line effect */
+    letter-spacing: -2px;
+    opacity: 0.7;
+}
+
+/* --- About Section --- */
+.about-section {
+    background-color: var(--color-bg-light);
+}
+
+.section-label {
+    color: var(--color-primary);
+    font-weight: 700;
+    font-size: 13px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.section-label::after {
+    content: '////////////';
+    letter-spacing: -2px;
+}
+
+/* --- Images --- */
+.rounded-image img {
+    border-radius: var(--radius-lg);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+}
+
+.play-button-overlay {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    z-index: 10;
+}
+
+.play-button-overlay i {
+    color: var(--color-primary);
+    font-size: 30px;
+    margin-left: 5px;
+    /* Optical adjustment */
+}
+
+/* --- Country Flags Circle --- */
+.country-flags {
+    display: flex;
+    align-items: center;
+    gap: -10px;
+}
+
+.country-flag {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 2px solid var(--color-secondary);
+    background-size: cover;
+    margin-right: -10px;
+    position: relative;
+    z-index: 1;
+}
+
+.country-flag.plus {
+    background-color: var(--color-primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: bold;
+}
+
+/* --- Header Styles --- */
+.site-header {
+    background: #ffffff;
+    box-shadow: 0 2px 20px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
+}
+
+.header-nav-link {
+    color: var(--color-secondary);
+    font-weight: 600;
+    font-size: 15px;
+    text-decoration: none;
+    margin: 0 15px;
+    transition: color 0.3s ease;
+    font-family: var(--font-heading);
+}
+
+.header-nav-link:hover {
+    color: var(--color-primary);
+}
+
+/* --- Footer Styles --- */
+.site-footer {
+    background-color: var(--color-secondary);
+    color: #A0AEC0;
+    font-size: 15px;
+}
+
+.site-footer h4 {
+    color: #ffffff;
+    margin-bottom: 25px;
+    font-size: 18px;
+}
+
+/* Footer Redesign (Black Card & Chevrons) */
+.footer-logo-card {
+    background-color: #000000;
+    border-radius: 30px;
+    padding: 40px 20px;
+    text-align: center;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.footer-social-row {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.footer-social-btn {
+    width: 35px;
+    height: 35px;
+    border: 1px solid #333;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.footer-social-btn:hover {
+    background-color: var(--color-primary);
+    border-color: var(--color-primary);
+}
+
+/* Chevron Links */
+.footer-chevron-link {
+    display: flex;
+    align-items: center;
+    color: #A0AEC0;
+    text-decoration: none;
+    margin-bottom: 12px;
+    transition: all 0.3s ease;
+    font-size: 15px;
+}
+
+.footer-chevron-link::before {
+    content: '»';
+    color: var(--color-primary);
+    font-weight: bold;
+    font-size: 18px;
+    margin-right: 10px;
+    line-height: 1;
+}
+
+.footer-chevron-link:hover {
+    color: #fff;
+    padding-left: 5px;
+}
+
+/* Contact Info */
+.footer-contact-item {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 15px;
+    color: #A0AEC0;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+.footer-contact-icon {
+    color: var(--color-primary);
+    margin-right: 10px;
+    margin-top: 4px;
+    font-size: 16px;
+}
+
+.footer-company-name {
+    color: #fff;
+    font-weight: 700;
+    font-size: 16px;
+    margin-bottom: 10px;
+    display: block;
+}
+
+/* --- Explore Our Services Section --- */
+.services-section {
+    background: linear-gradient(135deg, #F5F7FA 0%, #E8EDF2 100%);
+    padding: 80px 0;
+    position: relative;
+    overflow: hidden;
+}
+
+.services-section::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -10%;
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(circle, rgba(243, 112, 33, 0.08) 0%, transparent 70%);
+    border-radius: 50%;
+    pointer-events: none;
+}
+
+.services-section::after {
+    content: '';
+    position: absolute;
+    bottom: -30%;
+    left: -5%;
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, rgba(11, 22, 44, 0.05) 0%, transparent 70%);
+    border-radius: 50%;
+    pointer-events: none;
+}
+
+/* Section Header */
+.services-header {
+    text-align: center;
+    margin-bottom: 60px;
+    position: relative;
+    z-index: 2;
+}
+
+.services-label {
+    color: var(--color-primary);
+    font-weight: 700;
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 15px;
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    animation: fadeInDown 0.8s ease;
+}
+
+.services-label::before,
+.services-label::after {
+    content: '';
+    width: 40px;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--color-primary), transparent);
+}
+
+.services-title {
+    font-size: 48px;
+    font-weight: 800;
+    color: var(--color-secondary);
+    margin-bottom: 20px;
+    line-height: 1.2;
+    animation: fadeInUp 0.8s ease 0.2s both;
+}
+
+.services-description {
+    font-size: 18px;
+    color: #5A6C7D;
+    max-width: 700px;
+    margin: 0 auto;
+    line-height: 1.7;
+    animation: fadeInUp 0.8s ease 0.4s both;
+}
+
+/* Service Cards Container */
+.services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 40px;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    position: relative;
+    z-index: 2;
+}
+
+/* Individual Service Card */
+.service-card {
+    background: #ffffff;
+    border-radius: 30px;
+    overflow: hidden;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    cursor: pointer;
+    animation: fadeInUp 0.8s ease both;
+}
+
+.service-card:nth-child(1) {
+    animation-delay: 0.2s;
+}
+
+.service-card:nth-child(2) {
+    animation-delay: 0.4s;
+}
+
+.service-card:nth-child(3) {
+    animation-delay: 0.6s;
+}
+
+.service-card:hover {
+    transform: translateY(-15px);
+    box-shadow: 0 25px 60px rgba(243, 112, 33, 0.2);
+}
+
+/* Card Image Container */
+.service-image-wrapper {
+    position: relative;
+    height: 280px;
+    overflow: hidden;
+    background: linear-gradient(135deg, #0B162C 0%, #1a2847 100%);
+}
+
+.service-image-wrapper::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(180deg, transparent 0%, rgba(11, 22, 44, 0.7) 100%);
+    z-index: 2;
+    transition: opacity 0.5s ease;
+}
+
+.service-card:hover .service-image-wrapper::before {
+    opacity: 0.5;
+}
+
+.service-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.service-card:hover .service-image {
+    transform: scale(1.15) rotate(2deg);
+}
+
+/* Service Icon Overlay */
+.service-icon-overlay {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90px;
+    height: 90px;
+    background: #ffffff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    z-index: 3;
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.service-card:hover .service-icon-overlay {
+    transform: translateX(-50%) translateY(-10px) rotate(360deg);
+    background: var(--color-primary);
+}
+
+.service-icon-overlay i,
+.service-icon-overlay svg {
+    font-size: 40px;
+    color: #5A7D9A;
+    transition: all 0.5s ease;
+}
+
+.service-card:hover .service-icon-overlay i,
+.service-card:hover .service-icon-overlay svg {
+    color: #ffffff;
+}
+
+/* Card Content */
+.service-content {
+    padding: 60px 30px 35px;
+    text-align: center;
+    position: relative;
+}
+
+.service-title {
+    font-size: 26px;
+    font-weight: 800;
+    color: var(--color-secondary);
+    margin-bottom: 15px;
+    transition: color 0.3s ease;
+}
+
+.service-card:hover .service-title {
+    color: var(--color-primary);
+}
+
+.service-description-text {
+    font-size: 15px;
+    color: #5A6C7D;
+    line-height: 1.7;
+    margin-bottom: 25px;
+}
+
+/* Read More Link */
+.service-read-more {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--color-primary);
+    font-weight: 700;
+    font-size: 15px;
+    text-decoration: none;
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+.service-read-more::after {
+    content: '→';
+    font-size: 18px;
+    transition: transform 0.3s ease;
+}
+
+.service-read-more:hover {
+    gap: 12px;
+}
+
+.service-read-more:hover::after {
+    transform: translateX(5px);
+}
+
+/* Decorative Elements */
+.service-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 5px;
+    background: linear-gradient(90deg, var(--color-primary), #FFB84D);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.service-card:hover::before {
+    transform: scaleX(1);
+}
+
+/* Animations */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .services-section {
+        padding: 60px 0;
+    }
+
+    .services-title {
+        font-size: 36px;
+    }
+
+    .services-description {
+        font-size: 16px;
+    }
+
+    .services-grid {
+        grid-template-columns: 1fr;
+        gap: 30px;
+    }
+
+    .service-image-wrapper {
+        height: 240px;
+    }
+
+    .service-icon-overlay {
+        width: 75px;
+        height: 75px;
+    }
+
+    .service-icon-overlay i,
+    .service-icon-overlay svg {
+        font-size: 32px;
+    }
+}

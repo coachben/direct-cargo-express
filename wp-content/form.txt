@@ -1,0 +1,13 @@
+
+Request a quote	
+Full Name	
+Email address	
+Tel/WhatsApp (Optional)	
+Required service: Air freight/Ocean freight	
+
+
+Collection address	
+Destination Address or Airport	
+No of Packages	
+Total gross weight (kg)	
+Weight & Dimensions of each package for more accurate quote (Optional)	

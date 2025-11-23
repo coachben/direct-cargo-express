@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Services Section - Quick Start</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 40px 20px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            padding: 60px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        h1 {
+            color: #0B162C;
+            font-size: 48px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #F37021;
+            font-size: 18px;
+            margin-bottom: 50px;
+            font-weight: 600;
+        }
+
+        .step {
+            background: #f8f9fa;
+            padding: 30px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            border-left: 5px solid #F37021;
+        }
+
+        .step h2 {
+            color: #0B162C;
+            font-size: 24px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .step-number {
+            background: #F37021;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 20px;
+        }
+
+        .code-block {
+            background: #0B162C;
+            color: #00ff00;
+            padding: 20px;
+            border-radius: 10px;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            overflow-x: auto;
+            margin: 15px 0;
+        }
+
+        .highlight {
+            background: #fff3cd;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: 600;
+            color: #856404;
+        }
+
+        .success {
+            background: #d4edda;
+            border-left-color: #28a745;
+        }
+
+        .warning {
+            background: #fff3cd;
+            border-left-color: #ffc107;
+        }
+
+        ul {
+            margin: 15px 0 15px 30px;
+            line-height: 2;
+        }
+
+        .file-list {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+
+        .file-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .file-icon {
+            font-size: 24px;
+        }
+
+        .btn {
+            display: inline-block;
+            background: #F37021;
+            color: white;
+            padding: 15px 30px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            margin: 10px 10px 10px 0;
+            transition: all 0.3s ease;
+        }
+
+        .btn:hover {
+            background: #D95D15;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(243, 112, 33, 0.3);
+        }
+
+        .btn-secondary {
+            background: #0B162C;
+        }
+
+        .btn-secondary:hover {
+            background: #1a2847;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>🚀 Services Section Integration</h1>
+        <p class="subtitle">Get your stunning services section live in 5 minutes!</p>
+
+        <!-- Step 1 -->
+        <div class="step success">
+            <h2>
+                <span class="step-number">1</span>
+                Login to WordPress
+            </h2>
+            <p>Navigate to your WordPress admin panel:</p>
+            <div class="code-block">http://directcargo.local/wp-admin</div>
+            <p>Enter your username and password to access the dashboard.</p>
+        </div>
+
+        <!-- Step 2 -->
+        <div class="step">
+            <h2>
+                <span class="step-number">2</span>
+                Add Custom CSS
+            </h2>
+            <p>Go to: <span class="highlight">Appearance → Customize → Additional CSS</span></p>
+            <p>Copy the entire contents of <span class="highlight">modern-cargo-style.css</span> and paste it there.</p>
+            <p><strong>✅ Click "Publish" to save!</strong></p>
+        </div>
+
+        <!-- Step 3 -->
+        <div class="step">
+            <h2>
+                <span class="step-number">3</span>
+                Edit Homepage with Elementor
+            </h2>
+            <p>Go to: <span class="highlight">Pages → Home → Edit with Elementor</span></p>
+            <p>Find the "Worldwide Delivery" section and add a new section below it.</p>
+        </div>
+
+        <!-- Step 4 -->
+        <div class="step">
+            <h2>
+                <span class="step-number">4</span>
+                Configure Section Settings
+            </h2>
+            <ul>
+                <li><strong>Background:</strong> Gradient from <code>#F5F7FA</code> to <code>#E8EDF2</code></li>
+                <li><strong>Padding:</strong> Top/Bottom <code>80px</code></li>
+                <li><strong>CSS Class:</strong> <code>services-section</code></li>
+            </ul>
+        </div>
+
+        <!-- Step 5 -->
+        <div class="step">
+            <h2>
+                <span class="step-number">5</span>
+                Add Header Content
+            </h2>
+            <p>Add three widgets in order:</p>
+            <ol>
+                <li><strong>Heading:</strong> "WHAT WE OFFER" → CSS Class: <code>services-label</code></li>
+                <li><strong>Heading:</strong> "Explore Our Services" → CSS Class: <code>services-title</code></li>
+                <li><strong>Text Editor:</strong> Description → CSS Class: <code>services-description</code></li>
+            </ol>
+        </div>
+
+        <!-- Step 6 -->
+        <div class="step">
+            <h2>
+                <span class="step-number">6</span>
+                Create 3-Column Grid
+            </h2>
+            <p>Add an <strong>Inner Section</strong> with 3 equal columns (33.33% each)</p>
+            <p>Add CSS Class: <code>services-grid</code></p>
+        </div>
+
+        <!-- Step 7 -->
+        <div class="step">
+            <h2>
+                <span class="step-number">7</span>
+                Build Service Cards
+            </h2>
+            <p>For each of the 3 columns, add:</p>
+            <ul>
+                <li>Container with class: <code>service-card</code></li>
+                <li>Image (truck/plane/ship) with class: <code>service-image</code></li>
+                <li>Icon overlay with class: <code>service-icon-overlay</code></li>
+                <li>Content container with class: <code>service-content</code></li>
+                <li>Title, description, and "Read More" link</li>
+            </ul>
+        </div>
+
+        <!-- Step 8 -->
+        <div class="step success">
+            <h2>
+                <span class="step-number">8</span>
+                Publish & Test!
+            </h2>
+            <p>Click <strong>Publish</strong> in Elementor and view your page!</p>
+            <p>✨ Hover over the cards to see the amazing animations!</p>
+        </div>
+
+        <!-- Files Reference -->
+        <div class="step warning">
+            <h2>📁 Files You Have</h2>
+            <div class="file-list">
+                <div class="file-item">
+                    <span class="file-icon">🎨</span>
+                    <strong>modern-cargo-style.css</strong> - All the CSS styles
+                </div>
+                <div class="file-item">
+                    <span class="file-icon">📄</span>
+                    <strong>services-section-demo.html</strong> - Working demo
+                </div>
+                <div class="file-item">
+                    <span class="file-icon">📋</span>
+                    <strong>services-section-reference.md</strong> - CSS class reference
+                </div>
+                <div class="file-item">
+                    <span class="file-icon">📖</span>
+                    <strong>INTEGRATION-GUIDE.md</strong> - Detailed guide
+                </div>
+                <div class="file-item">
+                    <span class="file-icon">⚙️</span>
+                    <strong>css-integration.php</strong> - PHP integration code
+                </div>
+            </div>
+        </div>
+
+        <!-- Quick Links -->
+        <div style="text-align: center; margin-top: 40px;">
+            <a href="http://directcargo.local/wp-admin" class="btn">Open WordPress Admin</a>
+            <a href="services-section-demo.html" class="btn btn-secondary">View Demo</a>
+            <a href="INTEGRATION-GUIDE.md" class="btn btn-secondary">Read Full Guide</a>
+        </div>
+
+        <!-- CSS Classes Quick Reference -->
+        <div class="step" style="margin-top: 40px;">
+            <h2>🏷️ CSS Classes Quick Reference</h2>
+            <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; margin-top: 20px;">
+                <div style="background: white; padding: 15px; border-radius: 8px;">
+                    <strong>Section:</strong>
+                    <ul style="margin: 10px 0 0 20px;">
+                        <li><code>services-section</code></li>
+                        <li><code>services-header</code></li>
+                        <li><code>services-grid</code></li>
+                    </ul>
+                </div>
+                <div style="background: white; padding: 15px; border-radius: 8px;">
+                    <strong>Header:</strong>
+                    <ul style="margin: 10px 0 0 20px;">
+                        <li><code>services-label</code></li>
+                        <li><code>services-title</code></li>
+                        <li><code>services-description</code></li>
+                    </ul>
+                </div>
+                <div style="background: white; padding: 15px; border-radius: 8px;">
+                    <strong>Card:</strong>
+                    <ul style="margin: 10px 0 0 20px;">
+                        <li><code>service-card</code></li>
+                        <li><code>service-image-wrapper</code></li>
+                        <li><code>service-icon-overlay</code></li>
+                    </ul>
+                </div>
+                <div style="background: white; padding: 15px; border-radius: 8px;">
+                    <strong>Content:</strong>
+                    <ul style="margin: 10px 0 0 20px;">
+                        <li><code>service-content</code></li>
+                        <li><code>service-title</code></li>
+                        <li><code>service-read-more</code></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

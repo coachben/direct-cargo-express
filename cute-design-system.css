@@ -1,0 +1,141 @@
+/* 
+ * Cute & Modern Design System for Direct Cargo Express
+ * Copy this into Appearance > Customize > Additional CSS 
+ * or Elementor > Site Settings > Custom CSS
+ */
+
+:root {
+    --color-primary: #FF6B6B;       /* Soft Coral Red */
+    --color-secondary: #4ECDC4;     /* Soft Teal */
+    --color-dark: #2D3436;          /* Dark Gunmetal */
+    --color-light: #F7FFF7;         /* Mint Cream */
+    --color-white: #FFFFFF;
+    --shadow-soft: 0 10px 30px rgba(0, 0, 0, 0.05);
+    --shadow-hover: 0 15px 35px rgba(0, 0, 0, 0.1);
+    --radius-card: 20px;
+    --radius-btn: 50px;
+}
+
+/* General Typography */
+body {
+    font-family: 'Quicksand', 'Open Sans', sans-serif;
+    color: var(--color-dark);
+    background-color: var(--color-light);
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Nunito', 'Fredoka One', sans-serif;
+    font-weight: 700;
+    color: var(--color-dark);
+}
+
+/* Buttons - Make them cute and pill-shaped */
+.elementor-button {
+    border-radius: var(--radius-btn) !important;
+    padding: 12px 30px !important;
+    font-weight: 600 !important;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: all 0.3s ease !important;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.elementor-button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 15px rgba(0,0,0,0.15);
+}
+
+/* Cards (Icon Boxes, Image Boxes, Testimonials) */
+.elementor-widget-icon-box .elementor-icon-box-wrapper,
+.elementor-widget-image-box .elementor-image-box-wrapper,
+.elementor-widget-testimonial .elementor-testimonial-wrapper {
+    background: var(--color-white);
+    padding: 40px;
+    border-radius: var(--radius-card);
+    box-shadow: var(--shadow-soft);
+    transition: all 0.3s ease;
+    border: 1px solid rgba(0,0,0,0.02);
+}
+
+.elementor-widget-icon-box:hover .elementor-icon-box-wrapper,
+.elementor-widget-image-box:hover .elementor-image-box-wrapper,
+.elementor-widget-testimonial:hover .elementor-testimonial-wrapper {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-hover);
+}
+
+/* Icons - Add a background blob or circle */
+.elementor-icon {
+    background-color: rgba(78, 205, 196, 0.1); /* Light Teal */
+    border-radius: 50%;
+    padding: 20px;
+    width: 80px;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+    transition: all 0.3s ease;
+}
+
+.elementor-widget-icon-box:hover .elementor-icon {
+    background-color: var(--color-secondary);
+    color: var(--color-white) !important;
+}
+
+.elementor-icon i {
+    font-size: 32px;
+}
+
+/* Section Backgrounds */
+.elementor-section {
+    position: relative;
+    overflow: hidden;
+}
+
+/* Add subtle blob decorations to sections (optional, requires pseudo-elements) */
+.cute-bg-blobs::before {
+    content: '';
+    position: absolute;
+    top: -10%;
+    left: -10%;
+    width: 300px;
+    height: 300px;
+    background: rgba(255, 107, 107, 0.05);
+    border-radius: 50%;
+    z-index: 0;
+}
+
+.cute-bg-blobs::after {
+    content: '';
+    position: absolute;
+    bottom: -10%;
+    right: -10%;
+    width: 400px;
+    height: 400px;
+    background: rgba(78, 205, 196, 0.05);
+    border-radius: 50%;
+    z-index: 0;
+}
+
+/* Form Fields */
+.elementor-field-textual {
+    border-radius: 10px !important;
+    background-color: #F0F2F5 !important;
+    border: none !important;
+    padding: 15px !important;
+}
+
+.elementor-field-textual:focus {
+    background-color: #FFFFFF !important;
+    box-shadow: 0 0 0 2px var(--color-secondary) !important;
+}
+
+/* Footer */
+.site-footer {
+    background-color: var(--color-dark);
+    color: var(--color-white);
+    border-top-left-radius: 30px;
+    border-top-right-radius: 30px;
+    margin-top: 50px;
+}

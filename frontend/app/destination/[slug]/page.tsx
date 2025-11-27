@@ -28,16 +28,28 @@ const GET_DESTINATION = gql`
         }
         destinationDescription
         pricingTable {
-          country
-          city
-          airportCode
-          price100kg
-          price500kg
-          price1000kg
-          handlingFee
+          row1 { country city airportCode price100kg price500kg price1000kg handlingFee }
+          row2 { country city airportCode price100kg price500kg price1000kg handlingFee }
+          row3 { country city airportCode price100kg price500kg price1000kg handlingFee }
+          row4 { country city airportCode price100kg price500kg price1000kg handlingFee }
+          row5 { country city airportCode price100kg price500kg price1000kg handlingFee }
+          row6 { country city airportCode price100kg price500kg price1000kg handlingFee }
+          row7 { country city airportCode price100kg price500kg price1000kg handlingFee }
+          row8 { country city airportCode price100kg price500kg price1000kg handlingFee }
+          row9 { country city airportCode price100kg price500kg price1000kg handlingFee }
+          row10 { country city airportCode price100kg price500kg price1000kg handlingFee }
         }
         bulletPoints {
-          point
+          point1
+          point2
+          point3
+          point4
+          point5
+          point6
+          point7
+          point8
+          point9
+          point10
         }
         containerLoad {
           title
@@ -115,17 +127,19 @@ interface DestinationData {
             };
             destinationDescription?: string;
             pricingTable?: {
-                country: string;
-                city: string;
-                airportCode: string;
-                price100kg: string;
-                price500kg: string;
-                price1000kg: string;
-                handlingFee: string;
-            }[];
+                [key: string]: {
+                    country: string;
+                    city: string;
+                    airportCode: string;
+                    price100kg: string;
+                    price500kg: string;
+                    price1000kg: string;
+                    handlingFee: string;
+                } | null;
+            };
             bulletPoints?: {
-                point: string;
-            }[];
+                [key: string]: string | null;
+            };
             containerLoad?: {
                 title: string;
                 description: string;
@@ -162,6 +176,28 @@ export default async function DestinationPage({ params }: { params: Promise<{ sl
 
     // Debugging: Log the fetched data
     console.log('Fetched Destination Data:', JSON.stringify(destination, null, 2));
+
+    // Helper to transform Pricing Table Group to Array
+    const pricingTableArray = destination.destinationFields.pricingTable
+        ? Object.values(destination.destinationFields.pricingTable)
+            .filter((row): row is NonNullable<typeof row> => row !== null && !!row.country) // Filter out empty rows
+            .map(row => ({
+                country: row.country,
+                city: row.city,
+                airportCode: row.airportCode,
+                price100kg: row.price100kg,
+                price500kg: row.price500kg,
+                price1000kg: row.price1000kg,
+                handlingFee: row.handlingFee
+            }))
+        : [];
+
+    // Helper to transform Bullet Points Group to Array
+    const bulletPointsArray = destination.destinationFields.bulletPoints
+        ? Object.values(destination.destinationFields.bulletPoints)
+            .filter((point): point is string => typeof point === 'string' && point.trim() !== '')
+            .map(point => ({ point }))
+        : [];
 
     return (
         <main className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-orange/5 font-sans">
@@ -279,7 +315,7 @@ export default async function DestinationPage({ params }: { params: Promise<{ sl
 
 
                             {/* Pricing Table */}
-                            {destination.destinationFields.pricingTable && destination.destinationFields.pricingTable.length > 0 && (
+                            {pricingTableArray.length > 0 && (
                                 <div className="mt-12">
                                     <div className="bg-navy text-white text-center py-4 rounded-t-lg font-bold text-xl tracking-wide">
                                         AIRPORT TO AIRPORT
@@ -298,7 +334,7 @@ export default async function DestinationPage({ params }: { params: Promise<{ sl
                                                 </tr>
                                             </thead>
                                             <tbody className="bg-white divide-y divide-orange/10">
-                                                {destination.destinationFields.pricingTable.map((row, index) => (
+                                                {pricingTableArray.map((row, index) => (
                                                     <tr key={index} className="hover:bg-orange/5 transition-colors">
                                                         <td className="p-4 font-normal text-gray-900 border-r border-orange/10 last:border-r-0">{row.country}</td>
                                                         <td className="p-4 text-gray-700 border-r border-orange/10 last:border-r-0">{row.city}</td>
@@ -316,9 +352,9 @@ export default async function DestinationPage({ params }: { params: Promise<{ sl
                             )}
 
                             {/* Bullet Points */}
-                            {destination.destinationFields.bulletPoints && destination.destinationFields.bulletPoints.length > 0 && (
+                            {bulletPointsArray.length > 0 && (
                                 <div className="mt-8 space-y-3">
-                                    {destination.destinationFields.bulletPoints.map((item, index) => (
+                                    {bulletPointsArray.map((item, index) => (
                                         <div key={index} className="flex items-start gap-3">
                                             <div className="mt-1.5 w-2 h-2 rounded-full bg-orange flex-shrink-0"></div>
                                             <p className="text-gray-700 text-lg leading-relaxed">{item.point}</p>

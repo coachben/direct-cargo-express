@@ -19,9 +19,9 @@ echo "Found Angola Post ID: " . $post_id . "\n";
 
 // 2. Prepare Data
 
-// Pricing Table
+// Pricing Table (Group Field Structure)
 $pricing_table = array(
-    array(
+    'row_1' => array(
         'country' => 'Angola',
         'city' => 'Luanda',
         'airport_code' => 'LAD',
@@ -29,17 +29,31 @@ $pricing_table = array(
         'price_500kg' => '£5.90/kg',
         'price_1000kg' => '£5.50/kg',
         'handling_fee' => '£50 per shipment',
-    )
+    ),
+    // Initialize other rows as empty to avoid issues if needed, though ACF usually handles missing keys fine for groups
+    'row_2' => [],
+    'row_3' => [],
+    'row_4' => [],
+    'row_5' => [],
+    'row_6' => [],
+    'row_7' => [],
+    'row_8' => [],
+    'row_9' => [],
+    'row_10' => [],
 );
 
-// Bullet Points
+// Bullet Points (Group Field Structure)
 $bullet_points = array(
-    array('point' => 'Up-to Luanda Airport only'),
-    array('point' => 'Minimum weight charged is 100 kg'),
-    array('point' => 'Transit time 3-5 days Variable'),
-    array('point' => 'Destination charges may apply, such as taxes, airport charges etc...'),
-    array('point' => 'This is the quickest and cheapest way to ship to Angola by air'),
-    array('point' => 'We can arrange shipment collections from any UK address, please contact Us'),
+    'point_1' => 'Up-to Luanda Airport only',
+    'point_2' => 'Minimum weight charged is 100 kg',
+    'point_3' => 'Transit time 3-5 days Variable',
+    'point_4' => 'Destination charges may apply, such as taxes, airport charges etc...',
+    'point_5' => 'This is the quickest and cheapest way to ship to Angola by air',
+    'point_6' => 'We can arrange shipment collections from any UK address, please contact Us',
+    'point_7' => '',
+    'point_8' => '',
+    'point_9' => '',
+    'point_10' => '',
 );
 
 // Container Load Image

@@ -383,7 +383,7 @@ export default async function DestinationPage({ params }: { params: Promise<{ sl
                                             </div>
                                         )}
                                         <div className="md:w-7/12">
-                                            <h3 className="text-2xl md:text-3xl font-extrabold text-navy mb-4 leading-tight">
+                                            <h3 className="text-xl md:text-2xl font-extrabold text-navy mb-4 leading-tight">
                                                 {destination.destinationFields.containerLoad.title}
                                             </h3>
                                             {destination.destinationFields.containerLoad.description && (
@@ -459,7 +459,7 @@ export default async function DestinationPage({ params }: { params: Promise<{ sl
                 </div>
             </section>
 
-            <Footer />
+            <Footer logoUrl={data?.generalSettings?.siteLogoUrl} />
         </main>
     );
 }

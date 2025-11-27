@@ -15,7 +15,7 @@ interface HomepageData {
     homepageFields: {
       heroTitle: string;
       heroSubtitle: string;
-      heroBgImage: {
+      heroImage: {
         node: {
           sourceUrl: string;
         };
@@ -55,7 +55,13 @@ interface HomepageData {
           sourceUrl: string;
         };
       };
+      destinationFields: {
+        destinationRegion: string;
+      };
     }[];
+  };
+  generalSettings: {
+    siteLogoUrl: string;
   };
 }
 
@@ -63,11 +69,11 @@ export default async function Home() {
   const { data } = await client.query<HomepageData>({
     query: gql`
       query GetHomepageData {
-        page(id: "28", idType: DATABASE_ID) {
+        page(id: "9", idType: DATABASE_ID) {
           homepageFields {
             heroTitle
             heroSubtitle
-            heroBgImage {
+            heroImage {
               node {
                 sourceUrl
               }
@@ -106,8 +112,14 @@ export default async function Home() {
                 sourceUrl
               }
             }
+            destinationFields {
+              destinationRegion
+            }
           }
         }
+      generalSettings {
+        siteLogoUrl
+      }
       }
     `,
     fetchPolicy: "no-cache", // Ensure fresh data for testing
@@ -116,7 +128,7 @@ export default async function Home() {
   const homepageFields = data?.page?.homepageFields || {
     heroTitle: "Welcome",
     heroSubtitle: "Loading...",
-    heroBgImage: { node: { sourceUrl: "" } },
+    heroImage: { node: { sourceUrl: "" } },
     heroCtaText: "",
     heroCtaLink: "#",
     aboutTitle: "",
@@ -136,27 +148,35 @@ export default async function Home() {
     title: node.title,
     slug: node.slug,
     flagUrl: node.featuredImage?.node?.sourceUrl || "",
+    region: Array.isArray(node.destinationFields?.destinationRegion)
+      ? node.destinationFields?.destinationRegion[0]
+      : node.destinationFields?.destinationRegion || "Africa",
   })) || [];
+
+
+
+  const defaultAboutImage = `${process.env.NEXT_PUBLIC_WORDPRESS_API_URL?.replace('/graphql', '') || ''}/wp-content/uploads/destination/image-7.jpg`;
 
   return (
     <main className="min-h-screen flex flex-col">
-      <Navbar />
+      <Navbar logoUrl={data?.generalSettings?.siteLogoUrl} />
       <Hero
         title={homepageFields.heroTitle}
         subtitle={homepageFields.heroSubtitle}
-        bgImage={homepageFields.heroBgImage?.node?.sourceUrl || "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80"} // Fallback image
+        bgImage={homepageFields.heroImage?.node?.sourceUrl || "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80"} // Fallback image
         ctaText={homepageFields.heroCtaText}
         ctaLink={homepageFields.heroCtaLink}
       />
+      <Destinations destinations={destinations} />
       <About
         title={homepageFields.aboutTitle}
         content={homepageFields.aboutContent}
-        image={homepageFields.aboutImage?.node?.sourceUrl || "https://images.unsplash.com/photo-1519389950473-47ba0277781c?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80"} // Fallback image
+        image={homepageFields.aboutImage?.node?.sourceUrl || defaultAboutImage}
         phone={homepageFields.aboutPhone || "+1 (555) 123-4567"}
+        logoUrl={data?.generalSettings?.siteLogoUrl}
       />
       <Services services={services} />
-      <Destinations destinations={destinations} />
-      <Footer />
+      <Footer logoUrl={data?.generalSettings?.siteLogoUrl} />
     </main>
   );
 }

@@ -251,6 +251,21 @@ function dce_register_acf_fields()
                     'show_in_graphql' => 1,
                 ),
                 array(
+                    'key' => 'field_destination_region',
+                    'label' => 'Region',
+                    'name' => 'destination_region',
+                    'type' => 'select',
+                    'choices' => array(
+                        'Africa' => 'Africa',
+                        'Europe' => 'Europe',
+                        'Asia' => 'Asia',
+                        'Americas' => 'Americas',
+                        'Middle East' => 'Middle East',
+                    ),
+                    'default_value' => 'Africa',
+                    'show_in_graphql' => 1,
+                ),
+                array(
                     'key' => 'field_destination_map',
                     'label' => 'Map Image',
                     'name' => 'destination_map',

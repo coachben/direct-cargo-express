@@ -25,7 +25,7 @@ const Destinations: React.FC<DestinationsProps> = ({ destinations }) => {
                     {destinations.map((dest, index) => (
                         <Link
                             key={index}
-                            href={`/ destination / ${dest.slug} `} // Changed to dest.slug
+                            href={`/destination/${dest.slug}`}
                             className="flex flex-col items-center group" // Updated className
                         >
                             <div className="w-24 h-24 rounded-full overflow-hidden shadow-lg border-4 border-white transition duration-300 group-hover:scale-110 group-hover:shadow-2xl group-hover:border-orange relative">

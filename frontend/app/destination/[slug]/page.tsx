@@ -288,24 +288,24 @@ export default async function DestinationPage({ params }: { params: Promise<{ sl
                                         <table className="w-full text-left border-collapse">
                                             <thead>
                                                 <tr className="bg-gray-50 text-navy font-bold text-sm uppercase tracking-wider">
-                                                    <th className="p-4 border-b border-orange/30">Country</th>
-                                                    <th className="p-4 border-b border-orange/30">City</th>
-                                                    <th className="p-4 border-b border-orange/30">Airport Code</th>
-                                                    <th className="p-4 border-b border-orange/30">+100 kg</th>
-                                                    <th className="p-4 border-b border-orange/30">+500 kg</th>
-                                                    <th className="p-4 border-b border-orange/30">+1000 kg</th>
+                                                    <th className="p-4 border-b border-orange/30 border-r last:border-r-0">Country</th>
+                                                    <th className="p-4 border-b border-orange/30 border-r last:border-r-0">City</th>
+                                                    <th className="p-4 border-b border-orange/30 border-r last:border-r-0">Airport Code</th>
+                                                    <th className="p-4 border-b border-orange/30 border-r last:border-r-0">+100 kg</th>
+                                                    <th className="p-4 border-b border-orange/30 border-r last:border-r-0">+500 kg</th>
+                                                    <th className="p-4 border-b border-orange/30 border-r last:border-r-0">+1000 kg</th>
                                                     <th className="p-4 border-b border-orange/30">Handling & Documentation</th>
                                                 </tr>
                                             </thead>
                                             <tbody className="bg-white divide-y divide-orange/10">
                                                 {destination.destinationFields.pricingTable.map((row, index) => (
                                                     <tr key={index} className="hover:bg-orange/5 transition-colors">
-                                                        <td className="p-4 font-medium text-gray-900 border-r border-orange/10 last:border-r-0">{row.country}</td>
+                                                        <td className="p-4 font-normal text-gray-900 border-r border-orange/10 last:border-r-0">{row.country}</td>
                                                         <td className="p-4 text-gray-700 border-r border-orange/10 last:border-r-0">{row.city}</td>
-                                                        <td className="p-4 text-orange font-bold border-r border-orange/10 last:border-r-0">{row.airportCode}</td>
-                                                        <td className="p-4 font-semibold text-navy border-r border-orange/10 last:border-r-0">{row.price100kg}</td>
-                                                        <td className="p-4 font-semibold text-navy border-r border-orange/10 last:border-r-0">{row.price500kg}</td>
-                                                        <td className="p-4 font-semibold text-navy border-r border-orange/10 last:border-r-0">{row.price1000kg}</td>
+                                                        <td className="p-4 text-orange font-medium border-r border-orange/10 last:border-r-0">{row.airportCode}</td>
+                                                        <td className="p-4 font-normal text-navy border-r border-orange/10 last:border-r-0">{row.price100kg}</td>
+                                                        <td className="p-4 font-normal text-navy border-r border-orange/10 last:border-r-0">{row.price500kg}</td>
+                                                        <td className="p-4 font-normal text-navy border-r border-orange/10 last:border-r-0">{row.price1000kg}</td>
                                                         <td className="p-4 text-gray-600">{row.handlingFee}</td>
                                                     </tr>
                                                 ))}

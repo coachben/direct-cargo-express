@@ -67,7 +67,9 @@ const GET_DESTINATION = gql`
     generalSettings {
       title
       description
+      siteLogoUrl
     }
+
   }
 `;
 
@@ -156,6 +158,7 @@ interface DestinationData {
     generalSettings: {
         title: string;
         description: string;
+        siteLogoUrl?: string;
     };
 }
 
@@ -201,7 +204,7 @@ export default async function DestinationPage({ params }: { params: Promise<{ sl
 
     return (
         <main className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-orange/5 font-sans">
-            <Navbar />
+            <Navbar logoUrl={data?.generalSettings?.siteLogoUrl} />
 
             {/* Hero Header with Map & Flag */}
             <section className="relative bg-gradient-to-br from-navy via-[#003366] to-navy pt-32 pb-24 overflow-hidden">
@@ -284,7 +287,7 @@ export default async function DestinationPage({ params }: { params: Promise<{ sl
                     <div className="flex flex-col lg:flex-row gap-8">
                         {/* Main Content (Left) */}
                         <div className="lg:w-2/3">
-                            <div className="bg-white rounded-3xl shadow-xl p-8 md:p-12 relative overflow-hidden">
+                            <div className="bg-white rounded-3xl shadow-xl p-8 md:p-12 relative overflow-hidden text-gray-900">
                                 <div className="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-blue-600 via-navy to-blue-800"></div>
 
                                 <div className="prose prose-lg max-w-none prose-headings:text-navy prose-a:text-blue-600 hover:prose-a:text-blue-800 prose-strong:text-navy">
@@ -323,26 +326,26 @@ export default async function DestinationPage({ params }: { params: Promise<{ sl
                                     <div className="overflow-x-auto shadow-lg rounded-b-lg border border-orange/20">
                                         <table className="w-full text-left border-collapse">
                                             <thead>
-                                                <tr className="bg-gray-50 text-navy font-bold text-sm uppercase tracking-wider">
-                                                    <th className="p-4 border-b border-orange/30 border-r last:border-r-0">Country</th>
-                                                    <th className="p-4 border-b border-orange/30 border-r last:border-r-0">City</th>
-                                                    <th className="p-4 border-b border-orange/30 border-r last:border-r-0">Airport Code</th>
-                                                    <th className="p-4 border-b border-orange/30 border-r last:border-r-0">+100 kg</th>
-                                                    <th className="p-4 border-b border-orange/30 border-r last:border-r-0">+500 kg</th>
-                                                    <th className="p-4 border-b border-orange/30 border-r last:border-r-0">+1000 kg</th>
-                                                    <th className="p-4 border-b border-orange/30">Handling & Documentation</th>
+                                                <tr className="bg-gray-50 text-navy font-bold text-xs md:text-sm uppercase tracking-wider">
+                                                    <th className="p-2 md:p-4 border-b border-orange/30 border-r last:border-r-0">Country</th>
+                                                    <th className="p-2 md:p-4 border-b border-orange/30 border-r last:border-r-0">City</th>
+                                                    <th className="p-2 md:p-4 border-b border-orange/30 border-r last:border-r-0">Airport Code</th>
+                                                    <th className="p-2 md:p-4 border-b border-orange/30 border-r last:border-r-0">+100 kg</th>
+                                                    <th className="p-2 md:p-4 border-b border-orange/30 border-r last:border-r-0">+500 kg</th>
+                                                    <th className="p-2 md:p-4 border-b border-orange/30 border-r last:border-r-0">+1000 kg</th>
+                                                    <th className="p-2 md:p-4 border-b border-orange/30">Handling & Documentation</th>
                                                 </tr>
                                             </thead>
-                                            <tbody className="bg-white divide-y divide-orange/10">
+                                            <tbody className="bg-white divide-y divide-orange/10 text-xs md:text-sm">
                                                 {pricingTableArray.map((row, index) => (
                                                     <tr key={index} className="hover:bg-orange/5 transition-colors">
-                                                        <td className="p-4 font-normal text-gray-900 border-r border-orange/10 last:border-r-0">{row.country}</td>
-                                                        <td className="p-4 text-gray-700 border-r border-orange/10 last:border-r-0">{row.city}</td>
-                                                        <td className="p-4 text-orange font-medium border-r border-orange/10 last:border-r-0">{row.airportCode}</td>
-                                                        <td className="p-4 font-normal text-navy border-r border-orange/10 last:border-r-0">{row.price100kg}</td>
-                                                        <td className="p-4 font-normal text-navy border-r border-orange/10 last:border-r-0">{row.price500kg}</td>
-                                                        <td className="p-4 font-normal text-navy border-r border-orange/10 last:border-r-0">{row.price1000kg}</td>
-                                                        <td className="p-4 text-gray-600">{row.handlingFee}</td>
+                                                        <td className="p-2 md:p-4 font-normal text-gray-900 border-r border-orange/10 last:border-r-0">{row.country}</td>
+                                                        <td className="p-2 md:p-4 text-gray-700 border-r border-orange/10 last:border-r-0">{row.city}</td>
+                                                        <td className="p-2 md:p-4 text-orange font-medium border-r border-orange/10 last:border-r-0">{row.airportCode}</td>
+                                                        <td className="p-2 md:p-4 font-normal text-navy border-r border-orange/10 last:border-r-0">{row.price100kg}</td>
+                                                        <td className="p-2 md:p-4 font-normal text-navy border-r border-orange/10 last:border-r-0">{row.price500kg}</td>
+                                                        <td className="p-2 md:p-4 font-normal text-navy border-r border-orange/10 last:border-r-0">{row.price1000kg}</td>
+                                                        <td className="p-2 md:p-4 text-gray-600">{row.handlingFee}</td>
                                                     </tr>
                                                 ))}
                                             </tbody>
@@ -365,37 +368,52 @@ export default async function DestinationPage({ params }: { params: Promise<{ sl
 
                             {/* Container Load Section */}
                             {destination.destinationFields.containerLoad && (
-                                <div className="mt-12 bg-gray-50 rounded-3xl p-8 border border-gray-100 shadow-sm">
+                                <div className="mt-12 bg-white rounded-3xl p-8 border border-gray-100 shadow-2xl transform hover:-translate-y-1 transition-transform duration-300">
                                     <div className="flex flex-col md:flex-row gap-8 items-center">
                                         {destination.destinationFields.containerLoad.image?.node?.sourceUrl && (
-                                            <div className="md:w-1/3">
-                                                <img
-                                                    src={destination.destinationFields.containerLoad.image.node.sourceUrl}
-                                                    alt="Container Load"
-                                                    className="w-full h-auto rounded-xl shadow-md transform hover:scale-105 transition-transform duration-300"
-                                                />
+                                            <div className="md:w-5/12">
+                                                <div className="relative rounded-xl overflow-hidden shadow-lg group">
+                                                    <div className="absolute inset-0 bg-navy/10 group-hover:bg-transparent transition-colors duration-300"></div>
+                                                    <img
+                                                        src={destination.destinationFields.containerLoad.image.node.sourceUrl}
+                                                        alt="Container Load"
+                                                        className="w-full h-auto object-cover transform group-hover:scale-105 transition-transform duration-500"
+                                                    />
+                                                </div>
                                             </div>
                                         )}
-                                        <div className="md:w-2/3">
-                                            <h3 className="text-2xl font-bold text-navy mb-4">
+                                        <div className="md:w-7/12">
+                                            <h3 className="text-2xl md:text-3xl font-extrabold text-navy mb-4 leading-tight">
                                                 {destination.destinationFields.containerLoad.title}
                                             </h3>
-                                            <p className="text-gray-600 mb-6 leading-relaxed">
-                                                {destination.destinationFields.containerLoad.description}
-                                            </p>
-                                            <div className="space-y-2">
+                                            {destination.destinationFields.containerLoad.description && (
+                                                <p className="text-gray-600 mb-6 leading-relaxed">
+                                                    {destination.destinationFields.containerLoad.description}
+                                                </p>
+                                            )}
+                                            <div className="space-y-3">
                                                 {destination.destinationFields.containerLoad.whatsapp && (
-                                                    <div className="flex items-center gap-2">
-                                                        <span className="font-bold text-orange">WhatsApp:</span>
-                                                        <span className="text-gray-800">{destination.destinationFields.containerLoad.whatsapp}</span>
+                                                    <div className="flex items-center gap-3 group">
+                                                        <div className="w-10 h-10 rounded-full bg-orange/10 flex items-center justify-center group-hover:bg-orange/20 transition-colors">
+                                                            <svg className="w-5 h-5 text-orange" fill="currentColor" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z" /></svg>
+                                                        </div>
+                                                        <div>
+                                                            <span className="block text-xs font-bold text-orange uppercase tracking-wider">WhatsApp</span>
+                                                            <span className="text-lg font-bold text-navy">{destination.destinationFields.containerLoad.whatsapp}</span>
+                                                        </div>
                                                     </div>
                                                 )}
                                                 {destination.destinationFields.containerLoad.email && (
-                                                    <div className="flex items-center gap-2">
-                                                        <span className="font-bold text-orange">Email:</span>
-                                                        <a href={`mailto:${destination.destinationFields.containerLoad.email}`} className="text-blue-600 hover:underline">
-                                                            {destination.destinationFields.containerLoad.email}
-                                                        </a>
+                                                    <div className="flex items-center gap-3 group">
+                                                        <div className="w-10 h-10 rounded-full bg-blue-50 flex items-center justify-center group-hover:bg-blue-100 transition-colors">
+                                                            <svg className="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+                                                        </div>
+                                                        <div>
+                                                            <span className="block text-xs font-bold text-blue-600 uppercase tracking-wider">Email</span>
+                                                            <a href={`mailto:${destination.destinationFields.containerLoad.email}`} className="text-lg font-bold text-navy hover:text-blue-600 transition-colors">
+                                                                {destination.destinationFields.containerLoad.email}
+                                                            </a>
+                                                        </div>
                                                     </div>
                                                 )}
                                             </div>

@@ -376,3 +376,17 @@ function dce_register_acf_fields()
 
     endif;
 }
+
+add_action('graphql_register_types', 'dce_register_graphql_fields');
+function dce_register_graphql_fields()
+{
+    register_graphql_field('GeneralSettings', 'siteLogoUrl', [
+        'type' => 'String',
+        'description' => 'The URL of the site logo set in the Customizer',
+        'resolve' => function () {
+            $custom_logo_id = get_theme_mod('custom_logo');
+            $logo = wp_get_attachment_image_src($custom_logo_id, 'full');
+            return $logo ? $logo[0] : null;
+        }
+    ]);
+}

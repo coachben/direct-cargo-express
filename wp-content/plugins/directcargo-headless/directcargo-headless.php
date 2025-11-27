@@ -196,6 +196,115 @@ if (function_exists('acf_add_local_field_group')):
                 'type' => 'wysiwyg',
                 'show_in_graphql' => 1,
             ),
+            // Pricing Table
+            array(
+                'key' => 'field_pricing_table',
+                'label' => 'Pricing Table',
+                'name' => 'pricing_table',
+                'type' => 'repeater',
+                'show_in_graphql' => 1,
+                'sub_fields' => array(
+                    array(
+                        'key' => 'field_pricing_country',
+                        'label' => 'Country',
+                        'name' => 'country',
+                        'type' => 'text',
+                    ),
+                    array(
+                        'key' => 'field_pricing_city',
+                        'label' => 'City',
+                        'name' => 'city',
+                        'type' => 'text',
+                    ),
+                    array(
+                        'key' => 'field_pricing_airport_code',
+                        'label' => 'Airport Code',
+                        'name' => 'airport_code',
+                        'type' => 'text',
+                    ),
+                    array(
+                        'key' => 'field_pricing_100kg',
+                        'label' => '+100 kg',
+                        'name' => 'price_100kg',
+                        'type' => 'text',
+                    ),
+                    array(
+                        'key' => 'field_pricing_500kg',
+                        'label' => '+500 kg',
+                        'name' => 'price_500kg',
+                        'type' => 'text',
+                    ),
+                    array(
+                        'key' => 'field_pricing_1000kg',
+                        'label' => '+1000 kg',
+                        'name' => 'price_1000kg',
+                        'type' => 'text',
+                    ),
+                    array(
+                        'key' => 'field_pricing_handling',
+                        'label' => 'Handling & Documentation',
+                        'name' => 'handling_fee',
+                        'type' => 'text',
+                    ),
+                ),
+            ),
+            // Bullet Points
+            array(
+                'key' => 'field_bullet_points',
+                'label' => 'Bullet Points',
+                'name' => 'bullet_points',
+                'type' => 'repeater',
+                'show_in_graphql' => 1,
+                'sub_fields' => array(
+                    array(
+                        'key' => 'field_bullet_point_text',
+                        'label' => 'Point',
+                        'name' => 'point',
+                        'type' => 'text',
+                    ),
+                ),
+            ),
+            // Container Load Section
+            array(
+                'key' => 'field_container_load',
+                'label' => 'Container Load Section',
+                'name' => 'container_load',
+                'type' => 'group',
+                'show_in_graphql' => 1,
+                'sub_fields' => array(
+                    array(
+                        'key' => 'field_container_title',
+                        'label' => 'Title',
+                        'name' => 'title',
+                        'type' => 'text',
+                    ),
+                    array(
+                        'key' => 'field_container_description',
+                        'label' => 'Description',
+                        'name' => 'description',
+                        'type' => 'textarea',
+                    ),
+                    array(
+                        'key' => 'field_container_image',
+                        'label' => 'Image',
+                        'name' => 'image',
+                        'type' => 'image',
+                        'return_format' => 'url',
+                    ),
+                    array(
+                        'key' => 'field_container_whatsapp',
+                        'label' => 'WhatsApp',
+                        'name' => 'whatsapp',
+                        'type' => 'text',
+                    ),
+                    array(
+                        'key' => 'field_container_email',
+                        'label' => 'Email',
+                        'name' => 'email',
+                        'type' => 'text',
+                    ),
+                ),
+            ),
         ),
         'location' => array(
             array(

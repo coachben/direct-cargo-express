@@ -15,6 +15,42 @@ const GET_DESTINATION = gql`
           sourceUrl
         }
       }
+      destinationFields {
+        destinationFlag {
+          node {
+            sourceUrl
+          }
+        }
+        destinationMap {
+          node {
+            sourceUrl
+          }
+        }
+        destinationDescription
+        pricingTable {
+          country
+          city
+          airportCode
+          price100kg
+          price500kg
+          price1000kg
+          handlingFee
+        }
+        bulletPoints {
+          point
+        }
+        containerLoad {
+          title
+          description
+          image {
+            node {
+              sourceUrl
+            }
+          }
+          whatsapp
+          email
+        }
+      }
     }
     generalSettings {
       title
@@ -31,6 +67,8 @@ interface DestinationsData {
     };
 }
 
+export const revalidate = 0; // Disable cache for immediate updates
+
 export async function generateStaticParams() {
     // Fetch all destinations to generate static pages
     const { data } = await client.query<DestinationsData>({
@@ -42,7 +80,8 @@ export async function generateStaticParams() {
                     }
                 }
             }
-        `
+        `,
+        fetchPolicy: 'no-cache' // Ensure fresh data
     });
 
     if (!data?.destinations?.nodes) {
@@ -63,6 +102,42 @@ interface DestinationData {
                 sourceUrl: string;
             };
         };
+        destinationFields: {
+            destinationFlag?: {
+                node: {
+                    sourceUrl: string;
+                };
+            };
+            destinationMap?: {
+                node: {
+                    sourceUrl: string;
+                };
+            };
+            destinationDescription?: string;
+            pricingTable?: {
+                country: string;
+                city: string;
+                airportCode: string;
+                price100kg: string;
+                price500kg: string;
+                price1000kg: string;
+                handlingFee: string;
+            }[];
+            bulletPoints?: {
+                point: string;
+            }[];
+            containerLoad?: {
+                title: string;
+                description: string;
+                image?: {
+                    node: {
+                        sourceUrl: string;
+                    };
+                };
+                whatsapp: string;
+                email: string;
+            };
+        };
     };
     generalSettings: {
         title: string;
@@ -76,6 +151,7 @@ export default async function DestinationPage({ params }: { params: Promise<{ sl
     const { data } = await client.query<DestinationData>({
         query: GET_DESTINATION,
         variables: { slug },
+        fetchPolicy: 'no-cache' // Ensure fresh data
     });
 
     const destination = data?.destination;
@@ -83,6 +159,9 @@ export default async function DestinationPage({ params }: { params: Promise<{ sl
     if (!destination) {
         return <div>Destination not found</div>;
     }
+
+    // Debugging: Log the fetched data
+    console.log('Fetched Destination Data:', JSON.stringify(destination, null, 2));
 
     return (
         <main className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-orange/5 font-sans">
@@ -106,18 +185,16 @@ export default async function DestinationPage({ params }: { params: Promise<{ sl
                     <div className="flex flex-col md:flex-row items-center justify-between gap-8">
                         {/* Left: Flag */}
                         <div className="md:w-1/4 flex justify-center md:justify-start">
-                            {destination.featuredImage?.node?.sourceUrl && (
-                                <div className="animate-fade-in">
-                                    <div className="relative group">
-                                        <div className="absolute inset-0 bg-gradient-to-r from-orange to-yellow-400 rounded-full blur-xl opacity-50 group-hover:opacity-75 transition-opacity duration-300"></div>
-                                        <img
-                                            src={destination.featuredImage.node.sourceUrl}
-                                            alt={`${destination.title} Flag`}
-                                            className="relative w-40 h-40 rounded-full border-4 border-white shadow-2xl object-cover transform group-hover:scale-105 transition-transform duration-300"
-                                        />
-                                    </div>
+                            <div className="animate-fade-in">
+                                <div className="relative group">
+                                    <div className="absolute inset-0 bg-gradient-to-r from-orange to-yellow-400 rounded-full blur-xl opacity-50 group-hover:opacity-75 transition-opacity duration-300"></div>
+                                    <img
+                                        src={destination.destinationFields.destinationFlag?.node?.sourceUrl || "/images/destination/Flag_of_Angola-1.svg"}
+                                        alt={`${destination.title} Flag`}
+                                        className="relative w-40 h-40 rounded-full border-4 border-white shadow-2xl object-cover transform group-hover:scale-105 transition-transform duration-300"
+                                    />
                                 </div>
-                            )}
+                            </div>
                         </div>
 
                         {/* Center: Text */}
@@ -154,7 +231,7 @@ export default async function DestinationPage({ params }: { params: Promise<{ sl
                                 <div className="relative group">
                                     <div className="absolute inset-0 bg-gradient-to-l from-orange to-yellow-400 rounded-full blur-xl opacity-50 group-hover:opacity-75 transition-opacity duration-300"></div>
                                     <img
-                                        src={`${process.env.NEXT_PUBLIC_WORDPRESS_API_URL?.replace('/graphql', '') || ''}/wp-content/uploads/destination/Angola map.jpeg`}
+                                        src={destination.destinationFields.destinationMap?.node?.sourceUrl || "/images/destination/Angola map.jpeg"}
                                         alt={`${destination.title} Map`}
                                         className="relative w-40 h-40 rounded-full border-4 border-white shadow-2xl object-cover transform group-hover:scale-105 transition-transform duration-300"
                                     />
@@ -175,7 +252,11 @@ export default async function DestinationPage({ params }: { params: Promise<{ sl
                                 <div className="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-blue-600 via-navy to-blue-800"></div>
 
                                 <div className="prose prose-lg max-w-none prose-headings:text-navy prose-a:text-blue-600 hover:prose-a:text-blue-800 prose-strong:text-navy">
-                                    <div dangerouslySetInnerHTML={{ __html: destination.content }} />
+                                    {destination.content ? (
+                                        <div dangerouslySetInnerHTML={{ __html: destination.content }} />
+                                    ) : (
+                                        <p>Information about shipping to {destination.title} is coming soon. Please contact us for a quote.</p>
+                                    )}
                                 </div>
                             </div>
 
@@ -194,6 +275,98 @@ export default async function DestinationPage({ params }: { params: Promise<{ sl
                                     <div className="text-gray-200">Hidden Fees</div>
                                 </div>
                             </div>
+
+
+
+                            {/* Pricing Table */}
+                            {destination.destinationFields.pricingTable && destination.destinationFields.pricingTable.length > 0 && (
+                                <div className="mt-12">
+                                    <div className="bg-navy text-white text-center py-4 rounded-t-lg font-bold text-xl tracking-wide">
+                                        AIRPORT TO AIRPORT
+                                    </div>
+                                    <div className="overflow-x-auto shadow-lg rounded-b-lg border border-orange/20">
+                                        <table className="w-full text-left border-collapse">
+                                            <thead>
+                                                <tr className="bg-gray-50 text-navy font-bold text-sm uppercase tracking-wider">
+                                                    <th className="p-4 border-b border-orange/30">Country</th>
+                                                    <th className="p-4 border-b border-orange/30">City</th>
+                                                    <th className="p-4 border-b border-orange/30">Airport Code</th>
+                                                    <th className="p-4 border-b border-orange/30">+100 kg</th>
+                                                    <th className="p-4 border-b border-orange/30">+500 kg</th>
+                                                    <th className="p-4 border-b border-orange/30">+1000 kg</th>
+                                                    <th className="p-4 border-b border-orange/30">Handling & Documentation</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody className="bg-white divide-y divide-orange/10">
+                                                {destination.destinationFields.pricingTable.map((row, index) => (
+                                                    <tr key={index} className="hover:bg-orange/5 transition-colors">
+                                                        <td className="p-4 font-medium text-gray-900 border-r border-orange/10 last:border-r-0">{row.country}</td>
+                                                        <td className="p-4 text-gray-700 border-r border-orange/10 last:border-r-0">{row.city}</td>
+                                                        <td className="p-4 text-orange font-bold border-r border-orange/10 last:border-r-0">{row.airportCode}</td>
+                                                        <td className="p-4 font-semibold text-navy border-r border-orange/10 last:border-r-0">{row.price100kg}</td>
+                                                        <td className="p-4 font-semibold text-navy border-r border-orange/10 last:border-r-0">{row.price500kg}</td>
+                                                        <td className="p-4 font-semibold text-navy border-r border-orange/10 last:border-r-0">{row.price1000kg}</td>
+                                                        <td className="p-4 text-gray-600">{row.handlingFee}</td>
+                                                    </tr>
+                                                ))}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            )}
+
+                            {/* Bullet Points */}
+                            {destination.destinationFields.bulletPoints && destination.destinationFields.bulletPoints.length > 0 && (
+                                <div className="mt-8 space-y-3">
+                                    {destination.destinationFields.bulletPoints.map((item, index) => (
+                                        <div key={index} className="flex items-start gap-3">
+                                            <div className="mt-1.5 w-2 h-2 rounded-full bg-orange flex-shrink-0"></div>
+                                            <p className="text-gray-700 text-lg leading-relaxed">{item.point}</p>
+                                        </div>
+                                    ))}
+                                </div>
+                            )}
+
+                            {/* Container Load Section */}
+                            {destination.destinationFields.containerLoad && (
+                                <div className="mt-12 bg-gray-50 rounded-3xl p-8 border border-gray-100 shadow-sm">
+                                    <div className="flex flex-col md:flex-row gap-8 items-center">
+                                        {destination.destinationFields.containerLoad.image?.node?.sourceUrl && (
+                                            <div className="md:w-1/3">
+                                                <img
+                                                    src={destination.destinationFields.containerLoad.image.node.sourceUrl}
+                                                    alt="Container Load"
+                                                    className="w-full h-auto rounded-xl shadow-md transform hover:scale-105 transition-transform duration-300"
+                                                />
+                                            </div>
+                                        )}
+                                        <div className="md:w-2/3">
+                                            <h3 className="text-2xl font-bold text-navy mb-4">
+                                                {destination.destinationFields.containerLoad.title}
+                                            </h3>
+                                            <p className="text-gray-600 mb-6 leading-relaxed">
+                                                {destination.destinationFields.containerLoad.description}
+                                            </p>
+                                            <div className="space-y-2">
+                                                {destination.destinationFields.containerLoad.whatsapp && (
+                                                    <div className="flex items-center gap-2">
+                                                        <span className="font-bold text-orange">WhatsApp:</span>
+                                                        <span className="text-gray-800">{destination.destinationFields.containerLoad.whatsapp}</span>
+                                                    </div>
+                                                )}
+                                                {destination.destinationFields.containerLoad.email && (
+                                                    <div className="flex items-center gap-2">
+                                                        <span className="font-bold text-orange">Email:</span>
+                                                        <a href={`mailto:${destination.destinationFields.containerLoad.email}`} className="text-blue-600 hover:underline">
+                                                            {destination.destinationFields.containerLoad.email}
+                                                        </a>
+                                                    </div>
+                                                )}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            )}
                         </div>
 
                         {/* Sidebar Form (Right) */}
@@ -210,7 +383,7 @@ export default async function DestinationPage({ params }: { params: Promise<{ sl
             <section className="py-20 relative overflow-hidden">
                 <div className="absolute inset-0">
                     <img
-                        src={`${process.env.NEXT_PUBLIC_WORDPRESS_API_URL?.replace('/graphql', '') || ''}/wp-content/uploads/destination/angola_destination.webp`}
+                        src="/images/destination/angola_destination.webp"
                         alt="Luanda Skyline"
                         className="w-full h-full object-cover"
                     />

@@ -46,7 +46,7 @@ const About: React.FC<AboutProps> = ({ title, content, image, phone }) => {
                     </div>
                     {/* Floating Badge */}
                     <div className="absolute -bottom-10 -right-10 bg-white p-6 rounded-3xl shadow-2xl flex items-center gap-4 animate-bounce-slow border border-gray-100">
-                        <img src="http://directcargo.local/wp-content/uploads/2025/11/logo.png" alt="Direct Cargo Express" className="h-12 w-auto object-contain" />
+                        <img src={`${process.env.NEXT_PUBLIC_WORDPRESS_API_URL?.replace('/graphql', '') || ''}/wp-content/uploads/2025/11/logo.png`} alt="Direct Cargo Express" className="h-12 w-auto object-contain" />
                     </div>
                 </div>
             </div>

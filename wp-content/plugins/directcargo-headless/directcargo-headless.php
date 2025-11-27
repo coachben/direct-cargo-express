@@ -168,4 +168,47 @@ if (function_exists('acf_add_local_field_group')):
         'map_graphql_types_from_location_rules' => 1,
     ));
 
+    // Destination Fields
+    acf_add_local_field_group(array(
+        'key' => 'group_destination',
+        'title' => 'Destination Details',
+        'fields' => array(
+            array(
+                'key' => 'field_destination_flag',
+                'label' => 'Country Flag',
+                'name' => 'destination_flag',
+                'type' => 'image',
+                'return_format' => 'url',
+                'show_in_graphql' => 1,
+            ),
+            array(
+                'key' => 'field_destination_map',
+                'label' => 'Map Image',
+                'name' => 'destination_map',
+                'type' => 'image',
+                'return_format' => 'url',
+                'show_in_graphql' => 1,
+            ),
+            array(
+                'key' => 'field_destination_description',
+                'label' => 'Description',
+                'name' => 'destination_description',
+                'type' => 'wysiwyg',
+                'show_in_graphql' => 1,
+            ),
+        ),
+        'location' => array(
+            array(
+                array(
+                    'param' => 'post_type',
+                    'operator' => '==',
+                    'value' => 'destination',
+                ),
+            ),
+        ),
+        'show_in_graphql' => 1,
+        'graphql_field_name' => 'destinationFields',
+        'map_graphql_types_from_location_rules' => 1,
+    ));
+
 endif;

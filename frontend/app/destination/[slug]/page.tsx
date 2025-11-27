@@ -23,9 +23,17 @@ const GET_DESTINATION = gql`
   }
 `;
 
+interface DestinationsData {
+    destinations: {
+        nodes: {
+            slug: string;
+        }[];
+    };
+}
+
 export async function generateStaticParams() {
     // Fetch all destinations to generate static pages
-    const { data } = await client.query({
+    const { data } = await client.query<DestinationsData>({
         query: gql`
             query GetAllDestinations {
                 destinations {
@@ -37,15 +45,35 @@ export async function generateStaticParams() {
         `
     });
 
-    return data.destinations.nodes.map((node: any) => ({
+    if (!data?.destinations?.nodes) {
+        return [];
+    }
+
+    return data.destinations.nodes.map((node) => ({
         slug: node.slug,
     }));
+}
+
+interface DestinationData {
+    destination: {
+        title: string;
+        content: string;
+        featuredImage?: {
+            node: {
+                sourceUrl: string;
+            };
+        };
+    };
+    generalSettings: {
+        title: string;
+        description: string;
+    };
 }
 
 export default async function DestinationPage({ params }: { params: Promise<{ slug: string }> }) {
     const { slug } = await params;
 
-    const { data } = await client.query({
+    const { data } = await client.query<DestinationData>({
         query: GET_DESTINATION,
         variables: { slug },
     });
@@ -126,7 +154,7 @@ export default async function DestinationPage({ params }: { params: Promise<{ sl
                                 <div className="relative group">
                                     <div className="absolute inset-0 bg-gradient-to-l from-orange to-yellow-400 rounded-full blur-xl opacity-50 group-hover:opacity-75 transition-opacity duration-300"></div>
                                     <img
-                                        src="http://directcargo.local/wp-content/uploads/destination/Angola map.jpeg"
+                                        src={`${process.env.NEXT_PUBLIC_WORDPRESS_API_URL?.replace('/graphql', '') || ''}/wp-content/uploads/destination/Angola map.jpeg`}
                                         alt={`${destination.title} Map`}
                                         className="relative w-40 h-40 rounded-full border-4 border-white shadow-2xl object-cover transform group-hover:scale-105 transition-transform duration-300"
                                     />
@@ -143,97 +171,11 @@ export default async function DestinationPage({ params }: { params: Promise<{ sl
                     <div className="flex flex-col lg:flex-row gap-8">
                         {/* Main Content (Left) */}
                         <div className="lg:w-2/3">
-                            <div className="bg-white p-8 md:p-12 rounded-3xl shadow-2xl border border-gray-100 hover:shadow-orange/10 transition-shadow duration-500">
-                                <div className="prose prose-lg max-w-none text-gray-700 prose-headings:text-navy prose-headings:font-bold prose-a:text-orange prose-a:no-underline hover:prose-a:underline prose-strong:text-navy">
-                                    <h3>Freight services UK to Angola</h3>
-                                    <p>
-                                        Shipping to Angola has never been easier, we provide competitive rates for door to port and door to door cargo
-                                        service to Luanda. If you are international student, relocating to Angola or do business in Angola we are here to
-                                        take care of all your export needs from UK to Angola.
-                                    </p>
+                            <div className="bg-white rounded-3xl shadow-xl p-8 md:p-12 relative overflow-hidden">
+                                <div className="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-blue-600 via-navy to-blue-800"></div>
 
-                                    <div className="my-8 overflow-x-auto rounded-xl shadow-lg border border-gray-100">
-                                        <table className="w-full min-w-[600px] text-left border-collapse">
-                                            <thead>
-                                                <tr className="bg-navy text-white">
-                                                    <th colSpan={7} className="p-4 text-center text-lg uppercase tracking-wider">Airport to Airport</th>
-                                                </tr>
-                                                <tr className="bg-gray-50 text-navy border-b border-gray-200">
-                                                    <th className="p-3 font-bold">Country</th>
-                                                    <th className="p-3 font-bold">City</th>
-                                                    <th className="p-3 font-bold">Airport Code</th>
-                                                    <th className="p-3 font-bold">+100 kg</th>
-                                                    <th className="p-3 font-bold">+500 kg</th>
-                                                    <th className="p-3 font-bold">+1000 kg</th>
-                                                    <th className="p-3 font-bold">Handling & Documentation</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr className="border-b border-gray-100 hover:bg-orange/5 transition-colors">
-                                                    <td className="p-3">Angola</td>
-                                                    <td className="p-3">Luanda</td>
-                                                    <td className="p-3 font-mono text-orange font-bold">LAD</td>
-                                                    <td className="p-3 font-bold">£6.50/kg</td>
-                                                    <td className="p-3 font-bold">£5.90/kg</td>
-                                                    <td className="p-3 font-bold">£5.50/kg</td>
-                                                    <td className="p-3">£50 per shipment</td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-
-                                    <ul className="list-none space-y-2 mb-8">
-                                        <li className="flex items-start gap-2">
-                                            <span className="text-orange mt-1">●</span>
-                                            <span>Up-to Luanda Airport only</span>
-                                        </li>
-                                        <li className="flex items-start gap-2">
-                                            <span className="text-orange mt-1">●</span>
-                                            <span>Minimum weight charged is 100 kg</span>
-                                        </li>
-                                        <li className="flex items-start gap-2">
-                                            <span className="text-orange mt-1">●</span>
-                                            <span>Transit time 3-5 days <strong>Variable</strong></span>
-                                        </li>
-                                        <li className="flex items-start gap-2">
-                                            <span className="text-orange mt-1">●</span>
-                                            <span>Destination charges may apply, such as taxes, airport charges etc...</span>
-                                        </li>
-                                        <li className="flex items-start gap-2">
-                                            <span className="text-orange mt-1">●</span>
-                                            <span>This is the quickest and cheapest way to ship to Angola by air</span>
-                                        </li>
-                                        <li className="flex items-start gap-2">
-                                            <span className="text-orange mt-1">●</span>
-                                            <span>We can arrange shipment collections from any UK address, please contact Us</span>
-                                        </li>
-                                    </ul>
-
-                                    <div className="bg-gray-50 p-6 rounded-2xl border border-gray-200 flex flex-col md:flex-row items-center gap-6 mb-8">
-                                        {/* Container Image */}
-                                        <div className="w-full md:w-1/3">
-                                            <img
-                                                src="http://directcargo.local/wp-content/uploads/destination/container-load.jpg"
-                                                alt="Full Container Load"
-                                                className="w-full h-32 object-cover rounded-xl shadow-lg"
-                                            />
-                                        </div>
-                                        <div className="w-full md:w-2/3">
-                                            <p className="font-bold text-lg text-navy mb-2">
-                                                Full container load to Port of Luanda, send us your requirements and we will revert with quote.
-                                            </p>
-                                            <div className="space-y-1 text-gray-600">
-                                                <p className="flex items-center gap-2">
-                                                    <span className="font-semibold text-orange">WhatsApp:</span>
-                                                    <a href="https://wa.me/447375964786" className="hover:text-navy transition">+447375964786</a>
-                                                </p>
-                                                <p className="flex items-center gap-2">
-                                                    <span className="font-semibold text-orange">Email:</span>
-                                                    <a href="mailto:info@directcargoexpress.com" className="hover:text-navy transition">info@directcargoexpress.com</a>
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </div>
+                                <div className="prose prose-lg max-w-none prose-headings:text-navy prose-a:text-blue-600 hover:prose-a:text-blue-800 prose-strong:text-navy">
+                                    <div dangerouslySetInnerHTML={{ __html: destination.content }} />
                                 </div>
                             </div>
 
@@ -268,7 +210,7 @@ export default async function DestinationPage({ params }: { params: Promise<{ sl
             <section className="py-20 relative overflow-hidden">
                 <div className="absolute inset-0">
                     <img
-                        src="http://directcargo.local/wp-content/uploads/destination/angola_destination.webp"
+                        src={`${process.env.NEXT_PUBLIC_WORDPRESS_API_URL?.replace('/graphql', '') || ''}/wp-content/uploads/destination/angola_destination.webp`}
                         alt="Luanda Skyline"
                         className="w-full h-full object-cover"
                     />

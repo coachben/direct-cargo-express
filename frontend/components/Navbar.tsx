@@ -6,7 +6,7 @@ const Navbar = () => {
         <nav className="absolute w-full z-50 bg-white shadow-md">
             <div className="container mx-auto px-4 py-4 flex justify-between items-center">
                 <Link href="/" className="flex items-center gap-2">
-                    <img src="http://directcargo.local/wp-content/uploads/2025/11/logo.png" alt="Direct Cargo Express" className="h-16 w-auto object-contain" />
+                    <img src={`${process.env.NEXT_PUBLIC_WORDPRESS_API_URL?.replace('/graphql', '') || ''}/wp-content/uploads/2025/11/logo.png`} alt="Direct Cargo Express" className="h-16 w-auto object-contain" />
                 </Link>
                 <div className="hidden md:flex space-x-8">
                     <Link href="#" className="text-navy font-semibold hover:text-orange transition">Home</Link>

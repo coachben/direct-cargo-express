@@ -34,3 +34,11 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+
+## Deploy on Railway
+
+1.  **Connect GitHub**: Create a new project on [Railway](https://railway.app) and connect this repository.
+2.  **Set Root Directory**: In Railway Settings, set the Root Directory to `/frontend`.
+3.  **Environment Variables**: Add the following variable in Railway:
+    *   `NEXT_PUBLIC_WORDPRESS_API_URL`: The URL of your WordPress GraphQL endpoint (e.g., `https://your-wp-app.up.railway.app/graphql`).
+

@@ -37,7 +37,14 @@ const About: React.FC<AboutProps> = ({ title, content, image, phone, logoUrl }) 
                             </div>
                             <div>
                                 <span className="block text-xs text-gray-400 uppercase tracking-wider">Have A Question?</span>
-                                <span className="block text-white font-bold text-lg">{phone}</span>
+                                <a
+                                    href={`https://wa.me/${phone.replace(/[^0-9]/g, '')}`}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="block text-white font-bold text-lg hover:text-orange transition-colors"
+                                >
+                                    {phone}
+                                </a>
                             </div>
                         </div>
                         <a href="#" className="bg-orange text-white px-8 py-4 rounded-lg font-bold hover:bg-orange/90 transition shadow-lg shadow-orange/20">

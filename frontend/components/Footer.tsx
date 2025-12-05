@@ -35,7 +35,14 @@ const Footer = ({ logoUrl }: { logoUrl?: string }) => {
                     <h4 className="text-lg font-bold mb-4">Contact Us</h4>
                     <p className="text-gray-400 mb-2">Unit 13, 1000 North Circular Road, London, NW2 7JP</p>
                     <p className="text-gray-400 mb-2">info@directcargoexpress.com</p>
-                    <p className="text-gray-400">+44 7375 964 786</p>
+                    <a
+                        href="https://wa.me/447375964786"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-gray-400 hover:text-white transition-colors"
+                    >
+                        +44 7375 964 786
+                    </a>
                 </div>
             </div>
             <div className="border-t border-gray-800 mt-12 pt-8 text-center text-gray-500">

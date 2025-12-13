@@ -1,26 +1,38 @@
 import React from 'react';
-import Link from 'next/link';
+import client from "../lib/apollo-client";
+import { gql } from "@apollo/client";
+import NavbarMenu from './NavbarMenu';
 
-const Navbar = ({ logoUrl }: { logoUrl?: string }) => {
-    const defaultLogo = `${process.env.NEXT_PUBLIC_WORDPRESS_API_URL?.replace('/graphql', '') || ''}/wp-content/uploads/2025/11/logo.png`;
-    return (
-        <nav className="absolute w-full z-50 bg-white shadow-md">
-            <div className="container mx-auto px-4 py-4 flex justify-between items-center">
-                <Link href="/" className="flex items-center gap-2">
-                    <img src={logoUrl || defaultLogo} alt="Direct Cargo Express" className="h-16 w-auto object-contain" />
-                </Link>
-                <div className="hidden md:flex space-x-8">
-                    <Link href="#" className="text-navy font-semibold hover:text-orange transition">Home</Link>
-                    <Link href="#" className="text-navy font-semibold hover:text-orange transition">Services</Link>
-                    <Link href="#" className="text-navy font-semibold hover:text-orange transition">About Us</Link>
-                    <Link href="#" className="text-navy font-semibold hover:text-orange transition">Contact</Link>
-                </div>
-                <Link href="#" className="bg-orange text-white px-8 py-3 rounded-full hover:bg-orange/90 transition duration-300 font-bold shadow-lg shadow-orange/20">
-                    Get Quote
-                </Link>
-            </div>
-        </nav>
-    );
+const GET_NAVBAR_DATA = gql`
+  query GetNavbarData {
+    destinations(first: 100) {
+      nodes {
+        title
+        slug
+        destinationFields {
+          destinationRegion
+        }
+      }
+    }
+  }
+`;
+
+const Navbar = async ({ logoUrl }: { logoUrl?: string }) => {
+    // Fetch destinations for the menu
+    const { data } = await client.query<any>({
+        query: GET_NAVBAR_DATA,
+        fetchPolicy: "no-cache" // Ensure we get fresh data
+    });
+
+    const destinations = data?.destinations?.nodes?.map((node: any) => ({
+        title: node.title,
+        slug: node.slug,
+        region: Array.isArray(node.destinationFields?.destinationRegion)
+            ? node.destinationFields?.destinationRegion[0]
+            : node.destinationFields?.destinationRegion || "Africa",
+    })) || [];
+
+    return <NavbarMenu logoUrl={logoUrl} destinations={destinations} />;
 };
 
 export default Navbar;

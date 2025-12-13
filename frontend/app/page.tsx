@@ -107,6 +107,7 @@ export default async function Home() {
         destinations {
           nodes {
             title
+            slug
             featuredImage {
               node {
                 sourceUrl

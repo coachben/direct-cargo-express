@@ -3,3 +3,9 @@ wp-content/uploads/
 .DS_Store
 node_modules/
 wp-content/updraft/
+
+# Ignore all plugins
+wp-content/plugins/*
+
+# Whitelist custom plugin
+!wp-content/plugins/directcargo-headless/

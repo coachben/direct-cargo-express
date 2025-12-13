@@ -283,13 +283,28 @@ function dce_register_acf_fields()
                 // Pricing Table (Simulated Repeater for ACF Free)
                 array(
                     'key' => 'field_pricing_table_group',
-                    'label' => 'Pricing Table (Max 10 Rows)',
+                    'label' => 'Pricing Table (Primary - e.g. Air Freight)',
                     'name' => 'pricing_table',
                     'type' => 'group',
                     'show_in_graphql' => 1,
                     'layout' => 'block',
                     'sub_fields' => (function () {
                         $rows = [];
+                        // Optional Title for the primary table
+                        $rows[] = array(
+                            'key' => 'field_pricing_primary_title',
+                            'label' => 'Table Title',
+                            'name' => 'table_title',
+                            'type' => 'text',
+                        );
+                        // Description for the primary table
+                        $rows[] = array(
+                            'key' => 'field_pricing_primary_desc',
+                            'label' => 'Table Description (Bullet Points)',
+                            'name' => 'table_description',
+                            'type' => 'wysiwyg',
+                        );
+
                         for ($i = 1; $i <= 10; $i++) {
                             $rows[] = array(
                                 'key' => 'field_pricing_row_' . $i,
@@ -301,10 +316,59 @@ function dce_register_acf_fields()
                                     array('key' => 'field_pricing_country_' . $i, 'label' => 'Country', 'name' => 'country', 'type' => 'text'),
                                     array('key' => 'field_pricing_city_' . $i, 'label' => 'City', 'name' => 'city', 'type' => 'text'),
                                     array('key' => 'field_pricing_airport_' . $i, 'label' => 'Airport Code', 'name' => 'airport_code', 'type' => 'text'),
+                                    array('key' => 'field_pricing_5kg_' . $i, 'label' => '+5 kg', 'name' => 'price_5kg', 'type' => 'text'), // New Field
                                     array('key' => 'field_pricing_100kg_' . $i, 'label' => '+100 kg', 'name' => 'price_100kg', 'type' => 'text'),
                                     array('key' => 'field_pricing_500kg_' . $i, 'label' => '+500 kg', 'name' => 'price_500kg', 'type' => 'text'),
                                     array('key' => 'field_pricing_1000kg_' . $i, 'label' => '+1000 kg', 'name' => 'price_1000kg', 'type' => 'text'),
                                     array('key' => 'field_pricing_handling_' . $i, 'label' => 'Handling & Doc', 'name' => 'handling_fee', 'type' => 'text'),
+                                )
+                            );
+                        }
+                        return $rows;
+                    })(),
+                ),
+
+                // Secondary Pricing Table (e.g. Ocean Freight)
+                array(
+                    'key' => 'field_pricing_table_secondary_group',
+                    'label' => 'Secondary Pricing Table (e.g. Ocean Freight) (Max 10 Rows)',
+                    'name' => 'pricing_table_secondary',
+                    'type' => 'group',
+                    'show_in_graphql' => 1,
+                    'layout' => 'block',
+                    'sub_fields' => (function () {
+                        $rows = [];
+                        // Optional Title for the secondary table
+                        $rows[] = array(
+                            'key' => 'field_pricing_secondary_title',
+                            'label' => 'Table Title (e.g. Monthly Ocean Freight)',
+                            'name' => 'table_title',
+                            'type' => 'text',
+                        );
+                        // Description for the secondary table
+                        $rows[] = array(
+                            'key' => 'field_pricing_secondary_desc',
+                            'label' => 'Table Description (Bullet Points)',
+                            'name' => 'table_description',
+                            'type' => 'wysiwyg',
+                        );
+
+                        for ($i = 1; $i <= 10; $i++) {
+                            $rows[] = array(
+                                'key' => 'field_pricing_sec_row_' . $i,
+                                'label' => 'Row ' . $i,
+                                'name' => 'row_' . $i,
+                                'type' => 'group',
+                                'layout' => 'table',
+                                'sub_fields' => array(
+                                    array('key' => 'field_pricing_sec_country_' . $i, 'label' => 'Country', 'name' => 'country', 'type' => 'text'),
+                                    array('key' => 'field_pricing_sec_city_' . $i, 'label' => 'City', 'name' => 'city', 'type' => 'text'),
+                                    array('key' => 'field_pricing_sec_airport_' . $i, 'label' => 'Airport Code', 'name' => 'airport_code', 'type' => 'text'),
+                                    array('key' => 'field_pricing_sec_5kg_' . $i, 'label' => '+5 kg', 'name' => 'price_5kg', 'type' => 'text'), // New Field
+                                    array('key' => 'field_pricing_sec_100kg_' . $i, 'label' => '+100 kg', 'name' => 'price_100kg', 'type' => 'text'),
+                                    array('key' => 'field_pricing_sec_500kg_' . $i, 'label' => '+500 kg', 'name' => 'price_500kg', 'type' => 'text'),
+                                    array('key' => 'field_pricing_sec_1000kg_' . $i, 'label' => '+1000 kg', 'name' => 'price_1000kg', 'type' => 'text'),
+                                    array('key' => 'field_pricing_sec_handling_' . $i, 'label' => 'Handling & Doc', 'name' => 'handling_fee', 'type' => 'text'),
                                 )
                             );
                         }

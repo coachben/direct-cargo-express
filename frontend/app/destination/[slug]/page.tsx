@@ -28,16 +28,32 @@ const GET_DESTINATION = gql`
         }
         destinationDescription
         pricingTable {
-          row1 { country city airportCode price100kg price500kg price1000kg handlingFee }
-          row2 { country city airportCode price100kg price500kg price1000kg handlingFee }
-          row3 { country city airportCode price100kg price500kg price1000kg handlingFee }
-          row4 { country city airportCode price100kg price500kg price1000kg handlingFee }
-          row5 { country city airportCode price100kg price500kg price1000kg handlingFee }
-          row6 { country city airportCode price100kg price500kg price1000kg handlingFee }
-          row7 { country city airportCode price100kg price500kg price1000kg handlingFee }
-          row8 { country city airportCode price100kg price500kg price1000kg handlingFee }
-          row9 { country city airportCode price100kg price500kg price1000kg handlingFee }
-          row10 { country city airportCode price100kg price500kg price1000kg handlingFee }
+          tableTitle
+          tableDescription
+          row1 { country city airportCode price5kg price100kg price500kg price1000kg handlingFee }
+          row2 { country city airportCode price5kg price100kg price500kg price1000kg handlingFee }
+          row3 { country city airportCode price5kg price100kg price500kg price1000kg handlingFee }
+          row4 { country city airportCode price5kg price100kg price500kg price1000kg handlingFee }
+          row5 { country city airportCode price5kg price100kg price500kg price1000kg handlingFee }
+          row6 { country city airportCode price5kg price100kg price500kg price1000kg handlingFee }
+          row7 { country city airportCode price5kg price100kg price500kg price1000kg handlingFee }
+          row8 { country city airportCode price5kg price100kg price500kg price1000kg handlingFee }
+          row9 { country city airportCode price5kg price100kg price500kg price1000kg handlingFee }
+          row10 { country city airportCode price5kg price100kg price500kg price1000kg handlingFee }
+        }
+        pricingTableSecondary {
+            tableTitle
+            tableDescription
+            row1 { country city airportCode price5kg price100kg price500kg price1000kg handlingFee }
+            row2 { country city airportCode price5kg price100kg price500kg price1000kg handlingFee }
+            row3 { country city airportCode price5kg price100kg price500kg price1000kg handlingFee }
+            row4 { country city airportCode price5kg price100kg price500kg price1000kg handlingFee }
+            row5 { country city airportCode price5kg price100kg price500kg price1000kg handlingFee }
+            row6 { country city airportCode price5kg price100kg price500kg price1000kg handlingFee }
+            row7 { country city airportCode price5kg price100kg price500kg price1000kg handlingFee }
+            row8 { country city airportCode price5kg price100kg price500kg price1000kg handlingFee }
+            row9 { country city airportCode price5kg price100kg price500kg price1000kg handlingFee }
+            row10 { country city airportCode price5kg price100kg price500kg price1000kg handlingFee }
         }
         bulletPoints {
           point1
@@ -129,15 +145,23 @@ interface DestinationData {
             };
             destinationDescription?: string;
             pricingTable?: {
+                tableTitle?: string;
+                tableDescription?: string;
                 [key: string]: {
                     country: string;
                     city: string;
                     airportCode: string;
+                    price5kg: string;
                     price100kg: string;
                     price500kg: string;
                     price1000kg: string;
                     handlingFee: string;
-                } | null;
+                } | any; // Allow title string
+            };
+            pricingTableSecondary?: {
+                tableTitle?: string;
+                tableDescription?: string;
+                [key: string]: any; // Allow dynamic rows and title
             };
             bulletPoints?: {
                 [key: string]: string | null;
@@ -188,19 +212,57 @@ export default async function DestinationPage({ params }: { params: Promise<{ sl
                 country: row.country,
                 city: row.city,
                 airportCode: row.airportCode,
+                price5kg: row.price5kg,
                 price100kg: row.price100kg,
                 price500kg: row.price500kg,
                 price1000kg: row.price1000kg,
                 handlingFee: row.handlingFee
             }))
         : [];
+    const primaryTableTitle = destination.destinationFields.pricingTable?.tableTitle || 'AIRPORT TO AIRPORT';
+    const primaryTableDesc = destination.destinationFields.pricingTable?.tableDescription || '';
+
+    // Helper to transform Secondary Pricing Table Group to Array
+    const pricingTableSecondaryArray = destination.destinationFields.pricingTableSecondary
+        ? Object.entries(destination.destinationFields.pricingTableSecondary)
+            .filter(([key, row]) => key.startsWith('row') && row !== null && !!(row as any).country) // Filter out title and empty rows
+            .map(([, row]) => ({
+                country: (row as any).country,
+                city: (row as any).city,
+                airportCode: (row as any).airportCode,
+                price5kg: (row as any).price5kg,
+                price100kg: (row as any).price100kg,
+                price500kg: (row as any).price500kg,
+                price1000kg: (row as any).price1000kg,
+                handlingFee: (row as any).handlingFee
+            }))
+        : [];
+    const secondaryTableTitle = destination.destinationFields.pricingTableSecondary?.tableTitle || 'OCEAN FREIGHT';
+    const secondaryTableDesc = destination.destinationFields.pricingTableSecondary?.tableDescription || '';
 
     // Helper to transform Bullet Points Group to Array
     const bulletPointsArray = destination.destinationFields.bulletPoints
-        ? Object.values(destination.destinationFields.bulletPoints)
-            .filter((point): point is string => typeof point === 'string' && point.trim() !== '')
-            .map(point => ({ point }))
+        ? Object.entries(destination.destinationFields.bulletPoints)
+            .filter(([key, value]) => key !== '__typename' && typeof value === 'string' && value.trim() !== '')
+            .map(([, point]) => ({ point: point as string }))
         : [];
+
+    const containerLoad = destination.destinationFields.containerLoad;
+
+    // Helper to determine if a column should be shown
+    const hasData = (data: any[], key: string) => data.some(row => row[key] && row[key].trim() !== '');
+
+    const showPrimaryAirportCode = hasData(pricingTableArray, 'airportCode');
+    const showPrimary5kg = hasData(pricingTableArray, 'price5kg');
+    const showPrimary100kg = hasData(pricingTableArray, 'price100kg');
+    const showPrimary500kg = hasData(pricingTableArray, 'price500kg');
+    const showPrimary1000kg = hasData(pricingTableArray, 'price1000kg');
+
+    const showSecondaryAirportCode = hasData(pricingTableSecondaryArray, 'airportCode');
+    const showSecondary5kg = hasData(pricingTableSecondaryArray, 'price5kg');
+    const showSecondary100kg = hasData(pricingTableSecondaryArray, 'price100kg');
+    const showSecondary500kg = hasData(pricingTableSecondaryArray, 'price500kg');
+    const showSecondary1000kg = hasData(pricingTableSecondaryArray, 'price1000kg');
 
     return (
         <main className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-orange/5 font-sans">
@@ -320,8 +382,8 @@ export default async function DestinationPage({ params }: { params: Promise<{ sl
                             {/* Pricing Table */}
                             {pricingTableArray.length > 0 && (
                                 <div className="mt-12">
-                                    <div className="bg-navy text-white text-center py-4 rounded-t-lg font-bold text-xl tracking-wide">
-                                        AIRPORT TO AIRPORT
+                                    <div className="bg-navy text-white text-center py-4 rounded-t-lg font-bold text-xl tracking-wide uppercase">
+                                        {primaryTableTitle}
                                     </div>
                                     <div className="overflow-x-auto shadow-lg rounded-b-lg border border-orange/20">
                                         <table className="w-full text-left border-collapse">
@@ -329,11 +391,12 @@ export default async function DestinationPage({ params }: { params: Promise<{ sl
                                                 <tr className="bg-gray-50 text-navy font-bold text-xs md:text-sm uppercase tracking-wider">
                                                     {/* <th className="p-2 md:p-4 border-b border-orange/30 border-r last:border-r-0">Country</th> */}
                                                     <th className="p-2 md:p-4 border-b border-orange/30 border-r last:border-r-0">City</th>
-                                                    <th className="p-2 md:p-4 border-b border-orange/30 border-r last:border-r-0">Airport Code</th>
-                                                    <th className="p-2 md:p-4 border-b border-orange/30 border-r last:border-r-0">+100 kg</th>
-                                                    <th className="p-2 md:p-4 border-b border-orange/30 border-r last:border-r-0">+500 kg</th>
-                                                    <th className="p-2 md:p-4 border-b border-orange/30 border-r last:border-r-0">+1000 kg</th>
-                                                    <th className="p-2 md:p-4 border-b border-orange/30">Handling and Doc</th>
+                                                    {showPrimaryAirportCode && <th className="p-2 md:p-4 border-b border-orange/30 border-r last:border-r-0">Airport Code</th>}
+                                                    {showPrimary5kg && <th className="p-2 md:p-4 border-b border-orange/30 border-r last:border-r-0">+5 kg</th>}
+                                                    {showPrimary100kg && <th className="p-2 md:p-4 border-b border-orange/30 border-r last:border-r-0">+100 kg</th>}
+                                                    {showPrimary500kg && <th className="p-2 md:p-4 border-b border-orange/30 border-r last:border-r-0">+500 kg</th>}
+                                                    {showPrimary1000kg && <th className="p-2 md:p-4 border-b border-orange/30 border-r last:border-r-0">+1000 kg</th>}
+                                                    <th className="p-2 md:p-4 border-b border-orange/30">Documentation</th>
                                                 </tr>
                                             </thead>
                                             <tbody className="bg-white divide-y divide-orange/10 text-xs md:text-sm">
@@ -341,16 +404,72 @@ export default async function DestinationPage({ params }: { params: Promise<{ sl
                                                     <tr key={index} className="hover:bg-orange/5 transition-colors">
                                                         {/* <td className="p-2 md:p-4 font-normal text-gray-900 border-r border-orange/10 last:border-r-0">{row.country}</td> */}
                                                         <td className="p-2 md:p-4 text-gray-700 border-r border-orange/10 last:border-r-0">{row.city}</td>
-                                                        <td className="p-2 md:p-4 text-orange font-medium border-r border-orange/10 last:border-r-0">{row.airportCode}</td>
-                                                        <td className="p-2 md:p-4 font-normal text-navy border-r border-orange/10 last:border-r-0">{row.price100kg}</td>
-                                                        <td className="p-2 md:p-4 font-normal text-navy border-r border-orange/10 last:border-r-0">{row.price500kg}</td>
-                                                        <td className="p-2 md:p-4 font-normal text-navy border-r border-orange/10 last:border-r-0">{row.price1000kg}</td>
+                                                        {showPrimaryAirportCode && <td className="p-2 md:p-4 text-orange font-medium border-r border-orange/10 last:border-r-0">{row.airportCode}</td>}
+                                                        {showPrimary5kg && <td className="p-2 md:p-4 font-normal text-navy border-r border-orange/10 last:border-r-0">{row.price5kg}</td>}
+                                                        {showPrimary100kg && <td className="p-2 md:p-4 font-normal text-navy border-r border-orange/10 last:border-r-0">{row.price100kg}</td>}
+                                                        {showPrimary500kg && <td className="p-2 md:p-4 font-normal text-navy border-r border-orange/10 last:border-r-0">{row.price500kg}</td>}
+                                                        {showPrimary1000kg && <td className="p-2 md:p-4 font-normal text-navy border-r border-orange/10 last:border-r-0">{row.price1000kg}</td>}
                                                         <td className="p-2 md:p-4 text-gray-600">{row.handlingFee}</td>
                                                     </tr>
                                                 ))}
                                             </tbody>
                                         </table>
                                     </div>
+                                    {/* Table Description (Bullet Points) */}
+                                    {primaryTableDesc && (
+                                        <div
+                                            className="bg-white p-6 rounded-b-lg border-x border-b border-orange/20 shadow-lg text-gray-700 
+                                            [&>ul]:space-y-3 [&>ul>li]:relative [&>ul>li]:pl-5 
+                                            [&>ul>li]:before:content-['•'] [&>ul>li]:before:absolute [&>ul>li]:before:left-0 [&>ul>li]:before:text-orange [&>ul>li]:before:font-bold"
+                                            dangerouslySetInnerHTML={{ __html: primaryTableDesc }}
+                                        />
+                                    )}
+                                </div>
+                            )}
+
+                            {/* Secondary Pricing Table */}
+                            {pricingTableSecondaryArray.length > 0 && (
+                                <div className="mt-12">
+                                    <div className="bg-navy text-white text-center py-4 rounded-t-lg font-bold text-xl tracking-wide uppercase">
+                                        {secondaryTableTitle}
+                                    </div>
+                                    <div className="overflow-x-auto shadow-lg rounded-t-none border-x border-t border-orange/20 bg-white">
+                                        <table className="w-full text-left border-collapse">
+                                            <thead>
+                                                <tr className="bg-gray-50 text-navy font-bold text-xs md:text-sm uppercase tracking-wider">
+                                                    <th className="p-2 md:p-4 border-b border-orange/30 border-r last:border-r-0">City</th>
+                                                    {showSecondaryAirportCode && <th className="p-2 md:p-4 border-b border-orange/30 border-r last:border-r-0">Airport/Port</th>}
+                                                    {showSecondary5kg && <th className="p-2 md:p-4 border-b border-orange/30 border-r last:border-r-0">+5 kg</th>}
+                                                    {showSecondary100kg && <th className="p-2 md:p-4 border-b border-orange/30 border-r last:border-r-0">+100 kg</th>}
+                                                    {showSecondary500kg && <th className="p-2 md:p-4 border-b border-orange/30 border-r last:border-r-0">+500 kg</th>}
+                                                    {showSecondary1000kg && <th className="p-2 md:p-4 border-b border-orange/30 border-r last:border-r-0">+1000 kg</th>}
+                                                    <th className="p-2 md:p-4 border-b border-orange/30">Documentation</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody className="bg-white divide-y divide-orange/10 text-xs md:text-sm">
+                                                {pricingTableSecondaryArray.map((row, index) => (
+                                                    <tr key={index} className="hover:bg-orange/5 transition-colors">
+                                                        <td className="p-2 md:p-4 text-gray-700 border-r border-orange/10 last:border-r-0">{row.city}</td>
+                                                        {showSecondaryAirportCode && <td className="p-2 md:p-4 text-orange font-medium border-r border-orange/10 last:border-r-0">{row.airportCode}</td>}
+                                                        {showSecondary5kg && <td className="p-2 md:p-4 font-normal text-navy border-r border-orange/10 last:border-r-0">{row.price5kg}</td>}
+                                                        {showSecondary100kg && <td className="p-2 md:p-4 font-normal text-navy border-r border-orange/10 last:border-r-0">{row.price100kg}</td>}
+                                                        {showSecondary500kg && <td className="p-2 md:p-4 font-normal text-navy border-r border-orange/10 last:border-r-0">{row.price500kg}</td>}
+                                                        {showSecondary1000kg && <td className="p-2 md:p-4 font-normal text-navy border-r border-orange/10 last:border-r-0">{row.price1000kg}</td>}
+                                                        <td className="p-2 md:p-4 text-gray-600">{row.handlingFee}</td>
+                                                    </tr>
+                                                ))}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    {/* Secondary Table Description */}
+                                    {secondaryTableDesc && (
+                                        <div
+                                            className="bg-white p-6 rounded-b-lg border-x border-b border-orange/20 shadow-lg text-gray-700 
+                                            [&>ul]:space-y-3 [&>ul>li]:relative [&>ul>li]:pl-5 
+                                            [&>ul>li]:before:content-['•'] [&>ul>li]:before:absolute [&>ul>li]:before:left-0 [&>ul>li]:before:text-orange [&>ul>li]:before:font-bold"
+                                            dangerouslySetInnerHTML={{ __html: secondaryTableDesc }}
+                                        />
+                                    )}
                                 </div>
                             )}
 
@@ -454,13 +573,13 @@ export default async function DestinationPage({ params }: { params: Promise<{ sl
                 <div className="container mx-auto px-4 relative z-10">
                     <div className="max-w-4xl mx-auto">
                         <div className="bg-white/10 backdrop-blur-md border border-white/20 p-8 md:p-12 rounded-3xl shadow-2xl text-center transform hover:scale-[1.02] transition-transform duration-500">
-                            <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">About Angola</h2>
-                            <p className="text-lg md:text-xl text-gray-100 leading-relaxed font-light">
-                                Angola is a Southern African nation whose varied terrain encompasses tropical Atlantic beaches, a labyrinthine
-                                system of rivers and Sub-Saharan desert that extends across the border into Namibia. The country's colonial
-                                history is reflected in its Portuguese-influenced cuisine and its landmarks. The capital city is Luanda and the
-                                population of Angola is 34.5 million.
-                            </p>
+                            <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">About {destination.title}</h2>
+                            <div
+                                className="text-lg md:text-xl text-gray-100 leading-relaxed font-light [&>p]:mb-4 last:[&>p]:mb-0"
+                                dangerouslySetInnerHTML={{
+                                    __html: destination.destinationFields.destinationDescription || `Information about ${destination.title} is coming soon.`
+                                }}
+                            />
                         </div>
                     </div>
                 </div>

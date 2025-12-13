@@ -1,0 +1,28 @@
+
+# Ignore Git
+.git
+.gitignore
+.DS_Store
+
+# Ignore Frontend (it's a separate service)
+frontend/
+node_modules/
+
+# Ignore WP Core Directories (Use the image's version)
+wp-admin/
+wp-includes/
+
+# Ignore WP Core Files (Use the image's version)
+wp-*.php
+index.php
+xmlrpc.php
+license.txt
+readme.html
+
+# Wait! We need to KEEP wp-content!
+# The above rules don't exclude wp-content (it's a dir, not wp-*.php)
+
+# Optional: Ignore local backups/logs
+*.log
+*.zip
+*.sql

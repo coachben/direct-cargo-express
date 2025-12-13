@@ -18,6 +18,9 @@ RUN a2enmod rewrite headers
 # Copy local files to the container
 COPY . /var/www/html/
 
+# Fix permissions
+RUN chown -R www-data:www-data /var/www/html
+
 # Set working directory
 WORKDIR /var/www/html
 

@@ -1,0 +1,74 @@
+services:
+  # MySQL Database
+  - type: pserv
+    name: directcargo-mysql
+    env: docker
+    dockerfilePath: ./Dockerfile.mysql
+    envVars:
+      - key: MYSQL_DATABASE
+        value: wordpress
+      - key: MYSQL_USER
+        value: wordpress
+      - key: MYSQL_PASSWORD
+        generateValue: true
+      - key: MYSQL_ROOT_PASSWORD
+        generateValue: true
+    disk:
+      name: mysql-data
+      mountPath: /var/lib/mysql
+      sizeGB: 10
+
+  # WordPress Backend
+  - type: web
+    name: directcargo-wordpress
+    env: docker
+    dockerfilePath: ./Dockerfile.wordpress
+    envVars:
+      - key: WORDPRESS_DB_HOST
+        fromService:
+          type: pserv
+          name: directcargo-mysql
+          property: hostport
+      - key: WORDPRESS_DB_NAME
+        value: wordpress
+      - key: WORDPRESS_DB_USER
+        value: wordpress
+      - key: WORDPRESS_DB_PASSWORD
+        fromService:
+          type: pserv
+          name: directcargo-mysql
+          envVarKey: MYSQL_PASSWORD
+      - key: WORDPRESS_AUTH_KEY
+        generateValue: true
+      - key: WORDPRESS_AUTH_SALT
+        generateValue: true
+      - key: WORDPRESS_LOGGED_IN_KEY
+        generateValue: true
+      - key: WORDPRESS_LOGGED_IN_SALT
+        generateValue: true
+      - key: WORDPRESS_NONCE_KEY
+        generateValue: true
+      - key: WORDPRESS_NONCE_SALT
+        generateValue: true
+      - key: WORDPRESS_SECURE_AUTH_KEY
+        generateValue: true
+      - key: WORDPRESS_SECURE_AUTH_SALT
+        generateValue: true
+    disk:
+      name: wordpress-data
+      mountPath: /var/www/html
+      sizeGB: 10
+
+  # Next.js Frontend
+  - type: web
+    name: directcargo-frontend
+    env: docker
+    dockerfilePath: ./frontend/Dockerfile
+    dockerContext: ./frontend
+    envVars:
+      - key: NEXT_PUBLIC_WORDPRESS_API_URL
+        fromService:
+          type: web
+          name: directcargo-wordpress
+          envVarKey: RENDER_EXTERNAL_URL
+        value: /graphql

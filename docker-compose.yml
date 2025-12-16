@@ -1,0 +1,71 @@
+version: '3.8'
+
+services:
+  mysql:
+    image: mysql:5.7
+    container_name: directcargo-mysql
+    restart: always
+    environment:
+      MYSQL_DATABASE: wordpress
+      MYSQL_USER: wordpress
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD:-wordpress_password}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-root_password}
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      - directcargo-network
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      timeout: 20s
+      retries: 10
+
+  wordpress:
+    image: wordpress:latest
+    container_name: directcargo-wordpress
+    restart: always
+    depends_on:
+      mysql:
+        condition: service_healthy
+    environment:
+      WORDPRESS_DB_HOST: mysql:3306
+      WORDPRESS_DB_NAME: wordpress
+      WORDPRESS_DB_USER: wordpress
+      WORDPRESS_DB_PASSWORD: ${MYSQL_PASSWORD:-wordpress_password}
+      WORDPRESS_AUTH_KEY: ${WORDPRESS_AUTH_KEY:-6828we2qw4ghjjoc3x5clv64p4s4t3awltro0eyw8ws19p7q22dj6bknml9tbx0h}
+      WORDPRESS_AUTH_SALT: ${WORDPRESS_AUTH_SALT:-2xhxgmggrqrkh83gnpelz93f758tgpt6ztbemyh02s88cs3pxl4dhtnh5h3j1l49}
+      WORDPRESS_LOGGED_IN_KEY: ${WORDPRESS_LOGGED_IN_KEY:-w55atzs7xlb3xlxy4u6s1zlral3piyqozf8ch7do4onvjvxjdv4a597o9apfazr1kll3xc3sy47m7avf7wjjknev13de8p7awo5zwavquvk81m78ij3a4jq9m8ti37hi}
+      WORDPRESS_LOGGED_IN_SALT: ${WORDPRESS_LOGGED_IN_SALT:-id0fegxl7s3dw1gte42kacamx2n2yvs95ut9v69e1uktzp4k9hx1phcdjjvqjrltj7xdem0tcjforkjori09d2pqppwh059465a20684x6w2hwjhmohsuvv188l5zmln}
+      WORDPRESS_NONCE_KEY: ${WORDPRESS_NONCE_KEY:-z50dxoxvrl2fycgr8pekoq108yvsf8hzecn7v8u6a3z0nvefrkklndquec501xacb1sspo2v6fhggii1gvzi4jvi66wki5bhpyfb2rhx5s4mwax80usprcbeqnlffe15}
+      WORDPRESS_NONCE_SALT: ${WORDPRESS_NONCE_SALT:-rm08rhtk23be92jjswh7rsb4ee58ue7doy3if0zofxse6hq9t2ugosblmh7y745m3ybu3buo2caw4ao9hwfg9qs9c2tun169sn54uhsfefo7srizp5rik8ld1nk2khro}
+      WORDPRESS_SECURE_AUTH_KEY: ${WORDPRESS_SECURE_AUTH_KEY:-i1mtsdm0vqhf5aouwyracrdanbad3b2lid4lmcnf7yvzfxzx1pbgovd6fdbh326gk3sfwo8xllg3vdptvgcsuoxmt6qv22gh7k24i7jcxxqzqkmyvxc52wx6o69wv75d}
+      WORDPRESS_SECURE_AUTH_SALT: ${WORDPRESS_SECURE_AUTH_SALT:-ipsevmfzia43xswvuw7vi5o2wumpaovk2ibeh6yrzxpm6n300zyz9j6a7rjhwxt352o82bup91l1wvygzld5we5c1sufwc3v3007e9w4d6nzjocc24e9dz8cldg5a9a3}
+    ports:
+      - "8080:80"
+    volumes:
+      - wordpress_data:/var/www/html
+      - ./wp-content/plugins/directcargo-headless:/var/www/html/wp-content/plugins/directcargo-headless
+    networks:
+      - directcargo-network
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: directcargo-frontend
+    restart: always
+    depends_on:
+      - wordpress
+    environment:
+      NEXT_PUBLIC_WORDPRESS_API_URL: ${WORDPRESS_URL:-http://localhost:8080}/graphql
+    ports:
+      - "3000:3000"
+    networks:
+      - directcargo-network
+
+volumes:
+  mysql_data:
+  wordpress_data:
+
+networks:
+  directcargo-network:
+    driver: bridge

@@ -3,6 +3,7 @@ import type { NextConfig } from "next";
 // Force restart
 
 const nextConfig: NextConfig = {
+  output: 'standalone', // Required for Docker deployment
   images: {
     remotePatterns: [
       {
